@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    container_name: couponcloud_db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data_couponcloud:/var/lib/postgressql/data
+volumes:
+  db_data_couponcloud:
