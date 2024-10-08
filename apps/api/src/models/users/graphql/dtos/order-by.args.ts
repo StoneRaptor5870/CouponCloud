@@ -9,14 +9,14 @@ export class UserOrderByWithRelationInputStrict
       UserOrderByWithRelationInputStrict,
       Omit<
         Prisma.UserOrderByWithRelationInput,
-        'Credentials' | 'AuthProvider' | 'Admin'
+        'Credentials' | 'AuthProvider' | 'Admin' | 'image'
       >
     >
 {
   @Field(() => Prisma.SortOrder)
   uid: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
-  craetedAt: Prisma.SortOrder
+  createdAt: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
   updatedAt: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
