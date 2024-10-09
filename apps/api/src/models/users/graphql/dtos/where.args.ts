@@ -8,7 +8,7 @@ import {
 
 @InputType()
 export class UserWhereUniqueInput {
-  uid: string
+  id: string
 }
 
 @InputType()
@@ -18,11 +18,17 @@ export class UserWhereInputStrict
       UserWhereInputStrict,
       Omit<
         Prisma.UserWhereInput,
-        'Credentials' | 'AuthProvider' | 'Admin' | 'image'
+        | 'Credentials'
+        | 'AuthProvider'
+        | 'Admin'
+        | 'image'
+        | 'Manager'
+        | 'Customer'
+        | 'CouponHistory'
       >
     >
 {
-  uid: StringFilter
+  id: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   name: StringFilter

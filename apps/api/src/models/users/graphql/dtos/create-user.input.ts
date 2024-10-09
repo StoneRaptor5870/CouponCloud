@@ -15,7 +15,7 @@ registerEnumType(AuthProviderType, {
 @InputType()
 export class RegisterWithProviderInput extends PickType(
   User,
-  ['uid', 'name', 'image'],
+  ['id', 'name', 'image'],
   InputType,
 ) {
   @Field(() => AuthProviderType)

@@ -4,7 +4,7 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class User implements RestrictProperties<User, UserType> {
-  uid: string
+  id: string
   createdAt: Date
   updatedAt: Date
   @Field({ nullable: true })

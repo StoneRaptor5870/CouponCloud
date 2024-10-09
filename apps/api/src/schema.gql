@@ -5,7 +5,7 @@
 type User {
   name: String
   image: String
-  uid: String!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -26,7 +26,7 @@ type Query {
 }
 
 enum UserScalarFieldEnum {
-  uid
+  id
   createdAt
   updatedAt
   name
@@ -34,7 +34,7 @@ enum UserScalarFieldEnum {
 }
 
 input UserWhereInput {
-  uid: StringFilter
+  id: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   name: StringFilter
@@ -74,7 +74,7 @@ input DateTimeFilter {
 }
 
 input UserOrderByWithRelationInput {
-  uid: SortOrder
+  id: SortOrder
   createdAt: SortOrder
   updatedAt: SortOrder
   name: SortOrder
@@ -86,7 +86,7 @@ enum SortOrder {
 }
 
 input UserWhereUniqueInput {
-  uid: String!
+  id: String!
 }
 
 type Mutation {
@@ -107,7 +107,7 @@ input RegisterWithCredentialsInput {
 input RegisterWithProviderInput {
   name: String
   image: String
-  uid: String!
+  id: String!
   type: AuthProviderType!
 }
 
@@ -122,5 +122,5 @@ input LoginInput {
 }
 
 input UpdateUserInput {
-  uid: String!
+  id: String!
 }

@@ -44,7 +44,7 @@ export class UsersResolver {
   @AllowAuthenticated()
   @Query(() => User)
   whoami(@GetUser() user: GetUserType) {
-    return this.usersService.findOne({ where: { uid: user.uid } })
+    return this.usersService.findOne({ where: { id: user.id } })
   }
 
   @AllowAuthenticated()
@@ -56,7 +56,7 @@ export class UsersResolver {
   @AllowAuthenticated()
   @Query(() => User, { name: 'user' })
   findOne(@Args() args: FindUniqueUserArgs, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, args.where.uid)
+    checkRowLevelPermission(user, args.where.id)
     return this.usersService.findOne(args)
   }
 
@@ -67,9 +67,9 @@ export class UsersResolver {
     @GetUser() user: GetUserType,
   ) {
     const userInfo = await this.prisma.user.findUnique({
-      where: { uid: args.uid },
+      where: { id: args.id },
     })
-    checkRowLevelPermission(user, userInfo.uid)
+    checkRowLevelPermission(user, userInfo.id)
     return this.usersService.update(args)
   }
 
@@ -80,7 +80,7 @@ export class UsersResolver {
     @GetUser() user: GetUserType,
   ) {
     const userInfo = await this.prisma.user.findUnique(args)
-    checkRowLevelPermission(user, userInfo.uid)
+    checkRowLevelPermission(user, userInfo.id)
     return this.usersService.remove(args)
   }
 }

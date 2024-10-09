@@ -26,12 +26,12 @@ export class UsersService {
   async registerWithProvider({
     image,
     name,
-    uid,
+    id,
     type,
   }: RegisterWithProviderInput) {
     return await this.prisma.user.create({
       data: {
-        uid,
+        id,
         name,
         image,
         AuthProvider: {
@@ -61,11 +61,11 @@ export class UsersService {
     const salt = bcrypt.genSaltSync()
     const passwordHash = bcrypt.hashSync(password, salt)
 
-    const uid = uuid()
+    const id = uuid()
 
     return this.prisma.user.create({
       data: {
-        uid,
+        id,
         name,
         image,
         Credentials: {
@@ -106,7 +106,7 @@ export class UsersService {
       throw new UnauthorizedException('Invalid email or password.')
     }
     const jwtToken = this.jwtService.sign(
-      { uid: user.uid },
+      { id: user.id },
       {
         algorithm: 'HS256',
       },
@@ -123,9 +123,9 @@ export class UsersService {
   }
 
   update(updateUserInput: UpdateUserInput) {
-    const { uid, ...data } = updateUserInput
+    const { id, ...data } = updateUserInput
     return this.prisma.user.update({
-      where: { uid },
+      where: { id },
       data: data,
     })
   }
