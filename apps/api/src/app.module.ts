@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config'
 import { PrismaModule } from './common/prisma/prisma.module'
 import { UsersModule } from './models/users/users.module'
 import { JwtModule } from '@nestjs/jwt'
+import { AdminsModule } from './models/admins/admins.module'
 
 const MAX_AGE = 24 * 60 * 60
 @Module({
@@ -29,6 +30,7 @@ const MAX_AGE = 24 * 60 * 60
     }),
     PrismaModule,
     UsersModule,
+    AdminsModule
   ],
   controllers: [AppController],
   providers: [AppService],

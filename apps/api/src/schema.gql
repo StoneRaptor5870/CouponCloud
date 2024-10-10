@@ -19,10 +19,20 @@ type LoginOutput {
   token: String!
 }
 
+type Admin {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  userId: String!
+  user: User
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
   user(where: UserWhereUniqueInput!): User!
+  admins(distinct: [AdminScalarFieldEnum!], where: AdminWhereInput, orderBy: [AdminOrderByWithRelationInput!], cursor: AdminWhereUniqueInput, take: Float, skip: Float): [Admin!]!
+  admin(where: AdminWhereUniqueInput!): Admin!
 }
 
 enum UserScalarFieldEnum {
@@ -89,12 +99,50 @@ input UserWhereUniqueInput {
   id: String!
 }
 
+enum AdminScalarFieldEnum {
+  id
+  userId
+  createdAt
+  updatedAt
+}
+
+input AdminWhereInput {
+  id: StringFilter
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  AND: [AdminWhereInput!]
+  OR: [AdminWhereInput!]
+  NOT: [AdminWhereInput!]
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+input AdminOrderByWithRelationInput {
+  id: SortOrder
+  userId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+input AdminWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
   login(loginInput: LoginInput!): LoginOutput!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(where: UserWhereUniqueInput!): User!
+  createAdmin(createAdminInput: CreateAdminInput!): Admin!
+  updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
+  removeAdmin(where: AdminWhereUniqueInput!): Admin!
 }
 
 input RegisterWithCredentialsInput {
@@ -122,5 +170,14 @@ input LoginInput {
 }
 
 input UpdateUserInput {
+  id: String!
+}
+
+input CreateAdminInput {
+  userId: String!
+}
+
+input UpdateAdminInput {
+  userId: String
   id: String!
 }
