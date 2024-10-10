@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { AdminsService } from './admins.service'
 import { Admin } from './entity/admin.entity'
 import { FindManyAdminArgs, FindUniqueAdminArgs } from './dtos/find.args'
@@ -12,12 +19,17 @@ import { User } from 'src/models/users/graphql/entity/user.entity'
 
 @Resolver(() => Admin)
 export class AdminsResolver {
-  constructor(private readonly adminsService: AdminsService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly adminsService: AdminsService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Admin)
-  createAdmin(@Args('createAdminInput') args: CreateAdminInput, @GetUser() user: GetUserType) {
+  createAdmin(
+    @Args('createAdminInput') args: CreateAdminInput,
+    @GetUser() user: GetUserType,
+  ) {
     checkRowLevelPermission(user, args.userId)
     return this.adminsService.create(args)
   }
@@ -34,7 +46,10 @@ export class AdminsResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Admin)
-  async updateAdmin(@Args('updateAdminInput') args: UpdateAdminInput, @GetUser() user: GetUserType) {
+  async updateAdmin(
+    @Args('updateAdminInput') args: UpdateAdminInput,
+    @GetUser() user: GetUserType,
+  ) {
     const admin = await this.prisma.admin.findUnique({ where: { id: args.id } })
     checkRowLevelPermission(user, admin.userId)
     return this.adminsService.update(args)
@@ -42,7 +57,10 @@ export class AdminsResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Admin)
-  async removeAdmin(@Args() args: FindUniqueAdminArgs, @GetUser() user: GetUserType) {
+  async removeAdmin(
+    @Args() args: FindUniqueAdminArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const admin = await this.prisma.admin.findUnique(args)
     checkRowLevelPermission(user, admin.userId)
     return this.adminsService.remove(args)

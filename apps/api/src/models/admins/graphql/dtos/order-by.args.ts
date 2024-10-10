@@ -5,7 +5,11 @@ import { UserOrderByWithRelationInput } from 'src/models/users/graphql/dtos/orde
 
 @InputType()
 export class AdminOrderByWithRelationInputStrict
-  implements RestrictProperties<AdminOrderByWithRelationInputStrict, Prisma.AdminOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      AdminOrderByWithRelationInputStrict,
+      Prisma.AdminOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder
@@ -19,7 +23,6 @@ export class AdminOrderByWithRelationInputStrict
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }
-
 
 @InputType()
 export class AdminOrderByWithRelationInput extends PartialType(
