@@ -27,12 +27,23 @@ type Admin {
   user: User
 }
 
+type Manager {
+  displayName: String
+  companyId: String
+  id: String!
+  userId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
   user(where: UserWhereUniqueInput!): User!
   admins(distinct: [AdminScalarFieldEnum!], where: AdminWhereInput, orderBy: [AdminOrderByWithRelationInput!], cursor: AdminWhereUniqueInput, take: Float, skip: Float): [Admin!]!
   admin(where: AdminWhereUniqueInput!): Admin!
+  managers(distinct: [ManagerScalarFieldEnum!], where: ManagerWhereInput, orderBy: [ManagerOrderByWithRelationInput!], cursor: ManagerWhereUniqueInput, take: Float, skip: Float): [Manager!]!
+  manager(where: ManagerWhereUniqueInput!): Manager!
 }
 
 enum UserScalarFieldEnum {
@@ -134,6 +145,42 @@ input AdminWhereUniqueInput {
   id: String!
 }
 
+enum ManagerScalarFieldEnum {
+  id
+  userId
+  displayName
+  companyId
+  createdAt
+  updatedAt
+}
+
+input ManagerWhereInput {
+  displayName: StringFilter
+  id: StringFilter
+  userId: StringFilter
+  companyId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  AND: [ManagerWhereInput!]
+  OR: [ManagerWhereInput!]
+  NOT: [ManagerWhereInput!]
+}
+
+input ManagerOrderByWithRelationInput {
+  displayName: SortOrder
+  id: SortOrder
+  userId: SortOrder
+  companyId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+input ManagerWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
@@ -143,6 +190,9 @@ type Mutation {
   createAdmin(createAdminInput: CreateAdminInput!): Admin!
   updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
   removeAdmin(where: AdminWhereUniqueInput!): Admin!
+  createManager(createManagerInput: CreateManagerInput!): Manager!
+  updateManager(updateManagerInput: UpdateManagerInput!): Manager!
+  removeManager(where: ManagerWhereUniqueInput!): Manager!
 }
 
 input RegisterWithCredentialsInput {
@@ -178,6 +228,15 @@ input CreateAdminInput {
 }
 
 input UpdateAdminInput {
+  userId: String
+  id: String!
+}
+
+input CreateManagerInput {
+  userId: String!
+}
+
+input UpdateManagerInput {
   userId: String
   id: String!
 }
