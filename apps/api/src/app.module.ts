@@ -32,7 +32,7 @@ const MAX_AGE = 24 * 60 * 60
     PrismaModule,
     UsersModule,
     AdminsModule,
-    ManagersModule
+    ManagersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

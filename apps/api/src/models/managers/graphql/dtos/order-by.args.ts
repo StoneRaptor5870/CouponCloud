@@ -5,7 +5,11 @@ import { UserOrderByWithRelationInput } from 'src/models/users/graphql/dtos/orde
 
 @InputType()
 export class ManagerOrderByWithRelationInputStrict
-  implements RestrictProperties<ManagerOrderByWithRelationInputStrict, Omit<Prisma.ManagerOrderByWithRelationInput, 'company'>>
+  implements
+    RestrictProperties<
+      ManagerOrderByWithRelationInputStrict,
+      Omit<Prisma.ManagerOrderByWithRelationInput, 'company'>
+    >
 {
   @Field(() => Prisma.SortOrder)
   displayName: Prisma.SortOrder
@@ -25,7 +29,6 @@ export class ManagerOrderByWithRelationInputStrict
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }
-
 
 @InputType()
 export class ManagerOrderByWithRelationInput extends PartialType(

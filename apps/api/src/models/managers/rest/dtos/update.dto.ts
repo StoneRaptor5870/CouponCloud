@@ -5,4 +5,3 @@ import { Manager } from '@prisma/client'
 export class UpdateManager extends PartialType(CreateManager) {
   id: Manager['id']
 }
-
