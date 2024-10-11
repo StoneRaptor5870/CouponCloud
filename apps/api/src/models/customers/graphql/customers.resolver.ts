@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { CustomersService } from './customers.service'
 import { Customer } from './entity/customer.entity'
 import { FindManyCustomerArgs, FindUniqueCustomerArgs } from './dtos/find.args'
@@ -12,12 +19,17 @@ import { User } from 'src/models/users/graphql/entity/user.entity'
 
 @Resolver(() => Customer)
 export class CustomersResolver {
-  constructor(private readonly customersService: CustomersService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly customersService: CustomersService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Customer)
-  createCustomer(@Args('createCustomerInput') args: CreateCustomerInput, @GetUser() user: GetUserType) {
+  createCustomer(
+    @Args('createCustomerInput') args: CreateCustomerInput,
+    @GetUser() user: GetUserType,
+  ) {
     checkRowLevelPermission(user, args.userId)
     return this.customersService.create(args)
   }
@@ -34,15 +46,23 @@ export class CustomersResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Customer)
-  async updateCustomer(@Args('updateCustomerInput') args: UpdateCustomerInput, @GetUser() user: GetUserType) {
-    const customer = await this.prisma.customer.findUnique({ where: { id: args.id } })
+  async updateCustomer(
+    @Args('updateCustomerInput') args: UpdateCustomerInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const customer = await this.prisma.customer.findUnique({
+      where: { id: args.id },
+    })
     checkRowLevelPermission(user, customer.userId)
     return this.customersService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => Customer)
-  async removeCustomer(@Args() args: FindUniqueCustomerArgs, @GetUser() user: GetUserType) {
+  async removeCustomer(
+    @Args() args: FindUniqueCustomerArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const customer = await this.prisma.customer.findUnique(args)
     checkRowLevelPermission(user, customer.userId)
     return this.customersService.remove(args)

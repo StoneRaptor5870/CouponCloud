@@ -34,7 +34,7 @@ const MAX_AGE = 24 * 60 * 60
     UsersModule,
     AdminsModule,
     ManagersModule,
-    CustomersModule
+    CustomersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
