@@ -10,6 +10,7 @@ import { UsersModule } from './models/users/users.module'
 import { JwtModule } from '@nestjs/jwt'
 import { AdminsModule } from './models/admins/admins.module'
 import { ManagersModule } from './models/managers/managers.module'
+import { CustomersModule } from './models/customers/customers.module'
 
 const MAX_AGE = 24 * 60 * 60
 @Module({
@@ -33,6 +34,7 @@ const MAX_AGE = 24 * 60 * 60
     UsersModule,
     AdminsModule,
     ManagersModule,
+    CustomersModule
   ],
   controllers: [AppController],
   providers: [AppService],

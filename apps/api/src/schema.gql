@@ -36,6 +36,13 @@ type Manager {
   updatedAt: DateTime!
 }
 
+type Customer {
+  id: String!
+  userId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
@@ -44,6 +51,8 @@ type Query {
   admin(where: AdminWhereUniqueInput!): Admin!
   managers(distinct: [ManagerScalarFieldEnum!], where: ManagerWhereInput, orderBy: [ManagerOrderByWithRelationInput!], cursor: ManagerWhereUniqueInput, take: Float, skip: Float): [Manager!]!
   manager(where: ManagerWhereUniqueInput!): Manager!
+  customers(distinct: [CustomerScalarFieldEnum!], where: CustomerWhereInput, orderBy: [CustomerOrderByWithRelationInput!], cursor: CustomerWhereUniqueInput, take: Float, skip: Float): [Customer!]!
+  customer(where: CustomerWhereUniqueInput!): Customer!
 }
 
 enum UserScalarFieldEnum {
@@ -181,6 +190,36 @@ input ManagerWhereUniqueInput {
   id: String!
 }
 
+enum CustomerScalarFieldEnum {
+  id
+  userId
+  createdAt
+  updatedAt
+}
+
+input CustomerWhereInput {
+  id: StringFilter
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  AND: [CustomerWhereInput!]
+  OR: [CustomerWhereInput!]
+  NOT: [CustomerWhereInput!]
+}
+
+input CustomerOrderByWithRelationInput {
+  id: SortOrder
+  userId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+input CustomerWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
@@ -193,6 +232,9 @@ type Mutation {
   createManager(createManagerInput: CreateManagerInput!): Manager!
   updateManager(updateManagerInput: UpdateManagerInput!): Manager!
   removeManager(where: ManagerWhereUniqueInput!): Manager!
+  createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
+  updateCustomer(updateCustomerInput: UpdateCustomerInput!): Customer!
+  removeCustomer(where: CustomerWhereUniqueInput!): Customer!
 }
 
 input RegisterWithCredentialsInput {
@@ -237,6 +279,15 @@ input CreateManagerInput {
 }
 
 input UpdateManagerInput {
+  userId: String
+  id: String!
+}
+
+input CreateCustomerInput {
+  userId: String!
+}
+
+input UpdateCustomerInput {
   userId: String
   id: String!
 }
