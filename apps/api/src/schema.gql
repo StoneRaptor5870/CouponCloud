@@ -34,6 +34,17 @@ type Manager {
   userId: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  company: Company
+}
+
+type Company {
+  description: String
+  displayName: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: String!
+  name: String!
+  managers: [Manager!]!
 }
 
 type Customer {
@@ -41,6 +52,7 @@ type Customer {
   userId: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User
 }
 
 type Query {
@@ -53,6 +65,8 @@ type Query {
   manager(where: ManagerWhereUniqueInput!): Manager!
   customers(distinct: [CustomerScalarFieldEnum!], where: CustomerWhereInput, orderBy: [CustomerOrderByWithRelationInput!], cursor: CustomerWhereUniqueInput, take: Float, skip: Float): [Customer!]!
   customer(where: CustomerWhereUniqueInput!): Customer!
+  companies(distinct: [CompanyScalarFieldEnum!], where: CompanyWhereInput, orderBy: [CompanyOrderByWithRelationInput!], cursor: CompanyWhereUniqueInput, take: Float, skip: Float): [Company!]!
+  company(where: CompanyWhereUniqueInput!): Company!
 }
 
 enum UserScalarFieldEnum {
@@ -171,9 +185,34 @@ input ManagerWhereInput {
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   user: UserRelationFilter
+  company: CompanyRelationFilter
   AND: [ManagerWhereInput!]
   OR: [ManagerWhereInput!]
   NOT: [ManagerWhereInput!]
+}
+
+input CompanyRelationFilter {
+  is: CompanyWhereInput
+  isNot: CompanyWhereInput
+}
+
+input CompanyWhereInput {
+  id: StringFilter
+  name: StringFilter
+  displayName: StringFilter
+  description: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  managers: ManagerListRelationFilter
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
+  NOT: [CompanyWhereInput!]
+}
+
+input ManagerListRelationFilter {
+  every: ManagerWhereInput
+  some: ManagerWhereInput
+  none: ManagerWhereInput
 }
 
 input ManagerOrderByWithRelationInput {
@@ -184,6 +223,21 @@ input ManagerOrderByWithRelationInput {
   createdAt: SortOrder
   updatedAt: SortOrder
   user: UserOrderByWithRelationInput
+  company: CompanyOrderByWithRelationInput
+}
+
+input CompanyOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  displayName: SortOrder
+  description: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  managers: ManagerOrderByRelationAggregateInput
+}
+
+input ManagerOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input ManagerWhereUniqueInput {
@@ -220,6 +274,19 @@ input CustomerWhereUniqueInput {
   id: String!
 }
 
+enum CompanyScalarFieldEnum {
+  id
+  name
+  displayName
+  description
+  createdAt
+  updatedAt
+}
+
+input CompanyWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
@@ -235,6 +302,9 @@ type Mutation {
   createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
   updateCustomer(updateCustomerInput: UpdateCustomerInput!): Customer!
   removeCustomer(where: CustomerWhereUniqueInput!): Customer!
+  createCompany(createCompanyInput: CreateCompanyInput!): Company!
+  updateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
+  removeCompany(where: CompanyWhereUniqueInput!): Company!
 }
 
 input RegisterWithCredentialsInput {
@@ -275,10 +345,12 @@ input UpdateAdminInput {
 }
 
 input CreateManagerInput {
+  companyId: String
   userId: String!
 }
 
 input UpdateManagerInput {
+  companyId: String
   userId: String
   id: String!
 }
@@ -290,4 +362,14 @@ input CreateCustomerInput {
 input UpdateCustomerInput {
   userId: String
   id: String!
+}
+
+input CreateCompanyInput {
+  id: String!
+  name: String!
+}
+
+input UpdateCompanyInput {
+  id: String!
+  name: String
 }

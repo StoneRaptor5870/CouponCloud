@@ -4,6 +4,6 @@ import { Manager } from '../entity/manager.entity'
 @InputType()
 export class CreateManagerInput extends PickType(
   Manager,
-  ['userId'],
+  ['userId', 'companyId'],
   InputType,
 ) {}

@@ -5,6 +5,7 @@ import {
   StringFilter,
   RestrictProperties,
 } from 'src/common/dtos/common.input'
+import { CompanyRelationFilter } from 'src/models/companies/graphql/dtos/where.args'
 import { UserRelationFilter } from 'src/models/users/graphql/dtos/where.args'
 
 @InputType()
@@ -17,7 +18,7 @@ export class ManagerWhereInputStrict
   implements
     RestrictProperties<
       ManagerWhereInputStrict,
-      Omit<Prisma.ManagerWhereInput, 'company'>
+      Prisma.ManagerWhereInput
     >
 {
   displayName: StringFilter
@@ -27,8 +28,7 @@ export class ManagerWhereInputStrict
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   user: UserRelationFilter
-  // TODO
-  // company: (Prisma.Without<Prisma.CompanyRelationFilter, Prisma.CompanyWhereInput> & Prisma.CompanyWhereInput) | (Prisma.Without<Prisma.CompanyWhereInput, Prisma.CompanyRelationFilter> & Prisma.CompanyRelationFilter)
+  company: CompanyRelationFilter
   // Todo: Add the below field decorator only to the $Enums types.
   // @Field(() => $Enums.x)
 
