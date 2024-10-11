@@ -16,10 +16,7 @@ export class ManagerWhereUniqueInput {
 @InputType()
 export class ManagerWhereInputStrict
   implements
-    RestrictProperties<
-      ManagerWhereInputStrict,
-      Prisma.ManagerWhereInput
-    >
+    RestrictProperties<ManagerWhereInputStrict, Prisma.ManagerWhereInput>
 {
   displayName: StringFilter
   id: StringFilter

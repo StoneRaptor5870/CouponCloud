@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { CompaniesService } from './companies.service'
 import { Company } from './entity/company.entity'
 import { FindManyCompanyArgs, FindUniqueCompanyArgs } from './dtos/find.args'
@@ -12,12 +19,17 @@ import { Manager } from 'src/models/managers/graphql/entity/manager.entity'
 
 @Resolver(() => Company)
 export class CompaniesResolver {
-  constructor(private readonly companiesService: CompaniesService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly companiesService: CompaniesService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   //@AllowAuthenticated()
   @Mutation(() => Company)
-  createCompany(@Args('createCompanyInput') args: CreateCompanyInput, @GetUser() user: GetUserType) {
+  createCompany(
+    @Args('createCompanyInput') args: CreateCompanyInput,
+    @GetUser() user: GetUserType,
+  ) {
     //checkRowLevelPermission(user, args.id)
     return this.companiesService.create(args)
   }
@@ -34,15 +46,23 @@ export class CompaniesResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Company)
-  async updateCompany(@Args('updateCompanyInput') args: UpdateCompanyInput, @GetUser() user: GetUserType) {
-    const company = await this.prisma.company.findUnique({ where: { id: args.id } })
+  async updateCompany(
+    @Args('updateCompanyInput') args: UpdateCompanyInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const company = await this.prisma.company.findUnique({
+      where: { id: args.id },
+    })
     checkRowLevelPermission(user, company.id)
     return this.companiesService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => Company)
-  async removeCompany(@Args() args: FindUniqueCompanyArgs, @GetUser() user: GetUserType) {
+  async removeCompany(
+    @Args() args: FindUniqueCompanyArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const company = await this.prisma.company.findUnique(args)
     checkRowLevelPermission(user, company.id)
     return this.companiesService.remove(args)

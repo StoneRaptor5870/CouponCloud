@@ -5,7 +5,11 @@ import { ManagerOrderByRelationAggregateInput } from 'src/models/managers/graphq
 
 @InputType()
 export class CompanyOrderByWithRelationInputStrict
-  implements RestrictProperties<CompanyOrderByWithRelationInputStrict, Omit<Prisma.CompanyOrderByWithRelationInput, 'coupons'>>
+  implements
+    RestrictProperties<
+      CompanyOrderByWithRelationInputStrict,
+      Omit<Prisma.CompanyOrderByWithRelationInput, 'coupons'>
+    >
 {
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder
@@ -25,7 +29,6 @@ export class CompanyOrderByWithRelationInputStrict
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }
-
 
 @InputType()
 export class CompanyOrderByWithRelationInput extends PartialType(
