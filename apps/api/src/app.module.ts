@@ -12,6 +12,7 @@ import { AdminsModule } from './models/admins/admins.module'
 import { ManagersModule } from './models/managers/managers.module'
 import { CustomersModule } from './models/customers/customers.module'
 import { CompaniesModule } from './models/companies/companies.module'
+import { CouponsModule } from './models/coupons/coupons.module'
 
 const MAX_AGE = 24 * 60 * 60
 @Module({
@@ -37,6 +38,7 @@ const MAX_AGE = 24 * 60 * 60
     ManagersModule,
     CustomersModule,
     CompaniesModule,
+    CouponsModule
   ],
   controllers: [AppController],
   providers: [AppService],

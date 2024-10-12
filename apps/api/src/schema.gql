@@ -55,6 +55,26 @@ type Customer {
   user: User
 }
 
+type Coupon {
+  description: String
+  status: CouponStatus!
+  customerId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: String!
+  code: String!
+  discount: Float!
+  expiryDate: DateTime!
+  companyId: String!
+}
+
+enum CouponStatus {
+  ACTIVE
+  EXPIRED
+  REDEEMED
+  REVOKED
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
@@ -67,6 +87,8 @@ type Query {
   customer(where: CustomerWhereUniqueInput!): Customer!
   companies(distinct: [CompanyScalarFieldEnum!], where: CompanyWhereInput, orderBy: [CompanyOrderByWithRelationInput!], cursor: CompanyWhereUniqueInput, take: Float, skip: Float): [Company!]!
   company(where: CompanyWhereUniqueInput!): Company!
+  coupons(distinct: [CouponScalarFieldEnum!], where: CouponWhereInput, orderBy: [CouponOrderByWithRelationInput!], cursor: CouponWhereUniqueInput, take: Float, skip: Float): [Coupon!]!
+  coupon(where: CouponWhereUniqueInput!): Coupon!
 }
 
 enum UserScalarFieldEnum {
@@ -257,9 +279,54 @@ input CustomerWhereInput {
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   user: UserRelationFilter
+  coupons: CouponListRelationFilter
   AND: [CustomerWhereInput!]
   OR: [CustomerWhereInput!]
   NOT: [CustomerWhereInput!]
+}
+
+input CouponListRelationFilter {
+  every: CouponWhereInput
+  some: CouponWhereInput
+  none: CouponWhereInput
+}
+
+input CouponWhereInput {
+  id: StringFilter
+  code: StringFilter
+  description: StringFilter
+  discount: IntFilter
+  expiryDate: DateTimeFilter
+  status: EnumCouponStatusFilter
+  companyId: StringFilter
+  customerId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  company: CompanyRelationFilter
+  customer: CustomerRelationFilter
+  AND: [CouponWhereInput!]
+  OR: [CouponWhereInput!]
+  NOT: [CouponWhereInput!]
+}
+
+input IntFilter {
+  equals: Float
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+}
+
+input EnumCouponStatusFilter {
+  equals: CouponStatus
+  in: [CouponStatus!]
+  notIn: [CouponStatus!]
+  not: CouponStatus
+}
+
+input CustomerRelationFilter {
+  is: CustomerWhereInput
+  isNot: CustomerWhereInput
 }
 
 input CustomerOrderByWithRelationInput {
@@ -268,6 +335,11 @@ input CustomerOrderByWithRelationInput {
   createdAt: SortOrder
   updatedAt: SortOrder
   user: UserOrderByWithRelationInput
+  coupons: CouponOrderByRelationAggregateInput
+}
+
+input CouponOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input CustomerWhereUniqueInput {
@@ -284,6 +356,38 @@ enum CompanyScalarFieldEnum {
 }
 
 input CompanyWhereUniqueInput {
+  id: String!
+}
+
+enum CouponScalarFieldEnum {
+  id
+  code
+  description
+  discount
+  expiryDate
+  status
+  companyId
+  customerId
+  createdAt
+  updatedAt
+}
+
+input CouponOrderByWithRelationInput {
+  id: SortOrder
+  code: SortOrder
+  description: SortOrder
+  discount: SortOrder
+  expiryDate: SortOrder
+  status: SortOrder
+  companyId: SortOrder
+  customerId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  company: CompanyOrderByWithRelationInput
+  customer: CustomerOrderByWithRelationInput
+}
+
+input CouponWhereUniqueInput {
   id: String!
 }
 
@@ -305,6 +409,9 @@ type Mutation {
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
   updateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
   removeCompany(where: CompanyWhereUniqueInput!): Company!
+  createCoupon(createCouponInput: CreateCouponInput!): Coupon!
+  updateCoupon(updateCouponInput: UpdateCouponInput!): Coupon!
+  removeCoupon(where: CouponWhereUniqueInput!): Coupon!
 }
 
 input RegisterWithCredentialsInput {
@@ -372,4 +479,25 @@ input CreateCompanyInput {
 input UpdateCompanyInput {
   id: String!
   name: String
+}
+
+input CreateCouponInput {
+  description: String
+  status: CouponStatus!
+  customerId: String
+  code: String!
+  discount: Float!
+  expiryDate: DateTime!
+  companyId: String!
+}
+
+input UpdateCouponInput {
+  description: String
+  status: CouponStatus
+  customerId: String
+  code: String
+  discount: Float
+  expiryDate: DateTime
+  companyId: String
+  id: String!
 }
