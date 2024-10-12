@@ -3,13 +3,14 @@ import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 import { CompanyOrderByWithRelationInput } from 'src/models/companies/graphql/dtos/order-by.args'
 import { CustomerOrderByWithRelationInput } from 'src/models/customers/graphql/dtos/order-by.args'
+import { ReviewOrderByRelationAggregateInput } from 'src/models/reviews/graphql/dtos/order-by.args'
 
 @InputType()
 export class CouponOrderByWithRelationInputStrict
   implements
     RestrictProperties<
       CouponOrderByWithRelationInputStrict,
-      Omit<Prisma.CouponOrderByWithRelationInput, 'reviews' | 'CouponHistory'>
+      Omit<Prisma.CouponOrderByWithRelationInput, 'CouponHistory'>
     >
 {
   @Field(() => Prisma.SortOrder)
@@ -35,7 +36,7 @@ export class CouponOrderByWithRelationInputStrict
   company: CompanyOrderByWithRelationInput
   customer: CustomerOrderByWithRelationInput
   // TODO
-  // reviews: Prisma.ReviewOrderByRelationAggregateInput
+  reviews: ReviewOrderByRelationAggregateInput
   // CouponHistory: Prisma.CouponHistoryOrderByRelationAggregateInput
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)

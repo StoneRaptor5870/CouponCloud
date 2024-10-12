@@ -8,6 +8,7 @@ import {
 } from 'src/common/dtos/common.input'
 import { CompanyRelationFilter } from 'src/models/companies/graphql/dtos/where.args'
 import { CustomerRelationFilter } from 'src/models/customers/graphql/dtos/where.args'
+import { ReviewListRelationFilter } from 'src/models/reviews/graphql/dtos/where.args'
 
 @InputType()
 export class CouponWhereUniqueInput {
@@ -31,7 +32,7 @@ export class CouponWhereInputStrict
   implements
     RestrictProperties<
       CouponWhereInputStrict,
-      Omit<Prisma.CouponWhereInput, 'reviews' | 'CouponHistory'>
+      Omit<Prisma.CouponWhereInput, 'CouponHistory'>
     >
 {
   id: StringFilter
@@ -46,7 +47,7 @@ export class CouponWhereInputStrict
   updatedAt: DateTimeFilter
   company: CompanyRelationFilter
   customer: CustomerRelationFilter
-  // reviews: Prisma.ReviewListRelationFilter
+  reviews: ReviewListRelationFilter
   // CouponHistory: Prisma.CouponHistoryListRelationFilter
   // Todo: Add the below field decorator only to the $Enums types.
   // @Field(() => $Enums.x)

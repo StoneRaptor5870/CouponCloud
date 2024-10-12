@@ -2,6 +2,7 @@ import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 import { CouponOrderByRelationAggregateInput } from 'src/models/coupons/graphql/dtos/order-by.args'
+import { ReviewOrderByRelationAggregateInput } from 'src/models/reviews/graphql/dtos/order-by.args'
 import { UserOrderByWithRelationInput } from 'src/models/users/graphql/dtos/order-by.args'
 
 @InputType()
@@ -9,7 +10,7 @@ export class CustomerOrderByWithRelationInputStrict
   implements
     RestrictProperties<
       CustomerOrderByWithRelationInputStrict,
-      Omit<Prisma.CustomerOrderByWithRelationInput, 'reviews'>
+      Prisma.CustomerOrderByWithRelationInput
     >
 {
   @Field(() => Prisma.SortOrder)
@@ -21,9 +22,8 @@ export class CustomerOrderByWithRelationInputStrict
   @Field(() => Prisma.SortOrder)
   updatedAt: Prisma.SortOrder
   user: UserOrderByWithRelationInput
-  // TODO
   coupons: CouponOrderByRelationAggregateInput
-  // reviews: Prisma.ReviewOrderByRelationAggregateInput
+  reviews: ReviewOrderByRelationAggregateInput
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }

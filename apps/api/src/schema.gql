@@ -75,6 +75,17 @@ enum CouponStatus {
   REVOKED
 }
 
+type Review {
+  comment: String
+  id: String!
+  customerId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  rating: Float!
+  flagged: Boolean!
+  couponId: String!
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
@@ -89,6 +100,8 @@ type Query {
   company(where: CompanyWhereUniqueInput!): Company!
   coupons(distinct: [CouponScalarFieldEnum!], where: CouponWhereInput, orderBy: [CouponOrderByWithRelationInput!], cursor: CouponWhereUniqueInput, take: Float, skip: Float): [Coupon!]!
   coupon(where: CouponWhereUniqueInput!): Coupon!
+  reviews(distinct: [ReviewScalarFieldEnum!], where: ReviewWhereInput, orderBy: [ReviewOrderByWithRelationInput!], cursor: ReviewWhereUniqueInput, take: Float, skip: Float): [Review!]!
+  review(where: ReviewWhereUniqueInput!): Review!
 }
 
 enum UserScalarFieldEnum {
@@ -391,6 +404,60 @@ input CouponWhereUniqueInput {
   id: String!
 }
 
+enum ReviewScalarFieldEnum {
+  id
+  rating
+  comment
+  flagged
+  customerId
+  couponId
+  createdAt
+  updatedAt
+}
+
+input ReviewWhereInput {
+  id: StringFilter
+  rating: IntFilter
+  comment: StringFilter
+  flagged: BoolFilter
+  customerId: StringFilter
+  couponId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  customer: CustomerRelationFilter
+  coupon: CouponRelationFilter
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input CouponRelationFilter {
+  is: CouponWhereInput
+  isNot: CouponWhereInput
+}
+
+input ReviewOrderByWithRelationInput {
+  id: SortOrder
+  rating: SortOrder
+  comment: SortOrder
+  flagged: SortOrder
+  customerId: SortOrder
+  couponId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  customer: CustomerOrderByWithRelationInput
+  coupon: CouponOrderByWithRelationInput
+}
+
+input ReviewWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
@@ -412,6 +479,9 @@ type Mutation {
   createCoupon(createCouponInput: CreateCouponInput!): Coupon!
   updateCoupon(updateCouponInput: UpdateCouponInput!): Coupon!
   removeCoupon(where: CouponWhereUniqueInput!): Coupon!
+  createReview(createReviewInput: CreateReviewInput!): Review!
+  updateReview(updateReviewInput: UpdateReviewInput!): Review!
+  removeReview(where: ReviewWhereUniqueInput!): Review!
 }
 
 input RegisterWithCredentialsInput {
@@ -499,5 +569,22 @@ input UpdateCouponInput {
   discount: Float
   expiryDate: DateTime
   companyId: String
+  id: String!
+}
+
+input CreateReviewInput {
+  comment: String
+  customerId: String!
+  rating: Float!
+  flagged: Boolean!
+  couponId: String!
+}
+
+input UpdateReviewInput {
+  comment: String
+  customerId: String
+  rating: Float
+  flagged: Boolean
+  couponId: String
   id: String!
 }
