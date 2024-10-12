@@ -17,10 +17,7 @@ export class CustomerWhereUniqueInput {
 @InputType()
 export class CustomerWhereInputStrict
   implements
-    RestrictProperties<
-      CustomerWhereInputStrict,
-      Prisma.CustomerWhereInput
-    >
+    RestrictProperties<CustomerWhereInputStrict, Prisma.CustomerWhereInput>
 {
   id: StringFilter
   userId: StringFilter

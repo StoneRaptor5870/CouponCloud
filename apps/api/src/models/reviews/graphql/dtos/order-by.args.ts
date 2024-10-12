@@ -6,7 +6,11 @@ import { CustomerOrderByWithRelationInput } from 'src/models/customers/graphql/d
 
 @InputType()
 export class ReviewOrderByWithRelationInputStrict
-  implements RestrictProperties<ReviewOrderByWithRelationInputStrict, Prisma.ReviewOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      ReviewOrderByWithRelationInputStrict,
+      Prisma.ReviewOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder
@@ -29,7 +33,6 @@ export class ReviewOrderByWithRelationInputStrict
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }
-
 
 @InputType()
 export class ReviewOrderByWithRelationInput extends PartialType(
