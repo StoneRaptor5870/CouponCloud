@@ -86,6 +86,16 @@ type Review {
   couponId: String!
 }
 
+type ExpiredCoupon {
+  description: String
+  id: String!
+  code: String!
+  discount: Float!
+  expiryDate: DateTime!
+  companyId: String!
+  archivedAt: DateTime!
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
@@ -102,6 +112,8 @@ type Query {
   coupon(where: CouponWhereUniqueInput!): Coupon!
   reviews(distinct: [ReviewScalarFieldEnum!], where: ReviewWhereInput, orderBy: [ReviewOrderByWithRelationInput!], cursor: ReviewWhereUniqueInput, take: Float, skip: Float): [Review!]!
   review(where: ReviewWhereUniqueInput!): Review!
+  expiredCoupons(distinct: [ExpiredCouponScalarFieldEnum!], where: ExpiredCouponWhereInput, orderBy: [ExpiredCouponOrderByWithRelationInput!], cursor: ExpiredCouponWhereUniqueInput, take: Float, skip: Float): [ExpiredCoupon!]!
+  expiredCoupon(where: ExpiredCouponWhereUniqueInput!): ExpiredCoupon!
 }
 
 enum UserScalarFieldEnum {
@@ -293,6 +305,7 @@ input CustomerWhereInput {
   updatedAt: DateTimeFilter
   user: UserRelationFilter
   coupons: CouponListRelationFilter
+  reviews: ReviewListRelationFilter
   AND: [CustomerWhereInput!]
   OR: [CustomerWhereInput!]
   NOT: [CustomerWhereInput!]
@@ -317,6 +330,7 @@ input CouponWhereInput {
   updatedAt: DateTimeFilter
   company: CompanyRelationFilter
   customer: CustomerRelationFilter
+  reviews: ReviewListRelationFilter
   AND: [CouponWhereInput!]
   OR: [CouponWhereInput!]
   NOT: [CouponWhereInput!]
@@ -342,6 +356,38 @@ input CustomerRelationFilter {
   isNot: CustomerWhereInput
 }
 
+input ReviewListRelationFilter {
+  every: ReviewWhereInput
+  some: ReviewWhereInput
+  none: ReviewWhereInput
+}
+
+input ReviewWhereInput {
+  id: StringFilter
+  rating: IntFilter
+  comment: StringFilter
+  flagged: BoolFilter
+  customerId: StringFilter
+  couponId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  customer: CustomerRelationFilter
+  coupon: CouponRelationFilter
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input CouponRelationFilter {
+  is: CouponWhereInput
+  isNot: CouponWhereInput
+}
+
 input CustomerOrderByWithRelationInput {
   id: SortOrder
   userId: SortOrder
@@ -349,9 +395,14 @@ input CustomerOrderByWithRelationInput {
   updatedAt: SortOrder
   user: UserOrderByWithRelationInput
   coupons: CouponOrderByRelationAggregateInput
+  reviews: ReviewOrderByRelationAggregateInput
 }
 
 input CouponOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ReviewOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
@@ -398,6 +449,7 @@ input CouponOrderByWithRelationInput {
   updatedAt: SortOrder
   company: CompanyOrderByWithRelationInput
   customer: CustomerOrderByWithRelationInput
+  reviews: ReviewOrderByRelationAggregateInput
 }
 
 input CouponWhereUniqueInput {
@@ -415,32 +467,6 @@ enum ReviewScalarFieldEnum {
   updatedAt
 }
 
-input ReviewWhereInput {
-  id: StringFilter
-  rating: IntFilter
-  comment: StringFilter
-  flagged: BoolFilter
-  customerId: StringFilter
-  couponId: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  customer: CustomerRelationFilter
-  coupon: CouponRelationFilter
-  AND: [ReviewWhereInput!]
-  OR: [ReviewWhereInput!]
-  NOT: [ReviewWhereInput!]
-}
-
-input BoolFilter {
-  equals: Boolean
-  not: Boolean
-}
-
-input CouponRelationFilter {
-  is: CouponWhereInput
-  isNot: CouponWhereInput
-}
-
 input ReviewOrderByWithRelationInput {
   id: SortOrder
   rating: SortOrder
@@ -455,6 +481,43 @@ input ReviewOrderByWithRelationInput {
 }
 
 input ReviewWhereUniqueInput {
+  id: String!
+}
+
+enum ExpiredCouponScalarFieldEnum {
+  id
+  code
+  description
+  discount
+  expiryDate
+  companyId
+  archivedAt
+}
+
+input ExpiredCouponWhereInput {
+  id: StringFilter
+  code: StringFilter
+  description: StringFilter
+  discount: IntFilter
+  expiryDate: DateTimeFilter
+  companyId: StringFilter
+  archivedAt: DateTimeFilter
+  AND: [ExpiredCouponWhereInput!]
+  OR: [ExpiredCouponWhereInput!]
+  NOT: [ExpiredCouponWhereInput!]
+}
+
+input ExpiredCouponOrderByWithRelationInput {
+  id: SortOrder
+  code: SortOrder
+  description: SortOrder
+  discount: SortOrder
+  expiryDate: SortOrder
+  companyId: SortOrder
+  archivedAt: SortOrder
+}
+
+input ExpiredCouponWhereUniqueInput {
   id: String!
 }
 
@@ -482,6 +545,9 @@ type Mutation {
   createReview(createReviewInput: CreateReviewInput!): Review!
   updateReview(updateReviewInput: UpdateReviewInput!): Review!
   removeReview(where: ReviewWhereUniqueInput!): Review!
+  createExpiredCoupon(createExpiredCouponInput: CreateExpiredCouponInput!): ExpiredCoupon!
+  updateExpiredCoupon(updateExpiredCouponInput: UpdateExpiredCouponInput!): ExpiredCoupon!
+  removeExpiredCoupon(where: ExpiredCouponWhereUniqueInput!): ExpiredCoupon!
 }
 
 input RegisterWithCredentialsInput {
@@ -586,5 +652,24 @@ input UpdateReviewInput {
   rating: Float
   flagged: Boolean
   couponId: String
+  id: String!
+}
+
+input CreateExpiredCouponInput {
+  description: String
+  code: String!
+  discount: Float!
+  expiryDate: DateTime!
+  companyId: String!
+  archivedAt: DateTime!
+}
+
+input UpdateExpiredCouponInput {
+  description: String
+  code: String
+  discount: Float
+  expiryDate: DateTime
+  companyId: String
+  archivedAt: DateTime
   id: String!
 }

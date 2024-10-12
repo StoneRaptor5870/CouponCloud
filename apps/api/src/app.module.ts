@@ -14,6 +14,7 @@ import { CustomersModule } from './models/customers/customers.module'
 import { CompaniesModule } from './models/companies/companies.module'
 import { CouponsModule } from './models/coupons/coupons.module'
 import { ReviewsModule } from './models/reviews/reviews.module'
+import { ExpiredCouponsModule } from './models/expired-coupons/expired-coupons.module'
 
 const MAX_AGE = 24 * 60 * 60
 @Module({
@@ -41,6 +42,7 @@ const MAX_AGE = 24 * 60 * 60
     CompaniesModule,
     CouponsModule,
     ReviewsModule,
+    ExpiredCouponsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
