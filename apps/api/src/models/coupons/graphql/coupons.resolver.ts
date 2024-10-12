@@ -11,13 +11,18 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 
 @Resolver(() => Coupon)
 export class CouponsResolver {
-  constructor(private readonly couponsService: CouponsService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly couponsService: CouponsService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   // TODO : Undo
   // @AllowAuthenticated()
   @Mutation(() => Coupon)
-  createCoupon(@Args('createCouponInput') args: CreateCouponInput, @GetUser() user: GetUserType) {
+  createCoupon(
+    @Args('createCouponInput') args: CreateCouponInput,
+    @GetUser() user: GetUserType,
+  ) {
     // checkRowLevelPermission(user, args.id)
     return this.couponsService.create(args)
   }
@@ -34,15 +39,23 @@ export class CouponsResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Coupon)
-  async updateCoupon(@Args('updateCouponInput') args: UpdateCouponInput, @GetUser() user: GetUserType) {
-    const coupon = await this.prisma.coupon.findUnique({ where: { id: args.id } })
+  async updateCoupon(
+    @Args('updateCouponInput') args: UpdateCouponInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const coupon = await this.prisma.coupon.findUnique({
+      where: { id: args.id },
+    })
     checkRowLevelPermission(user, coupon.id)
     return this.couponsService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => Coupon)
-  async removeCoupon(@Args() args: FindUniqueCouponArgs, @GetUser() user: GetUserType) {
+  async removeCoupon(
+    @Args() args: FindUniqueCouponArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const coupon = await this.prisma.coupon.findUnique(args)
     checkRowLevelPermission(user, coupon.id)
     return this.couponsService.remove(args)

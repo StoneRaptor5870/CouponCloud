@@ -11,4 +11,3 @@ export class CouponQueryDto extends BaseQueryDto {
   @IsIn(Object.values(Prisma.CouponScalarFieldEnum))
   searchBy?: string
 }
-

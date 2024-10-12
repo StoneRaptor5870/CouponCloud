@@ -5,4 +5,3 @@ import { Coupon } from '@prisma/client'
 export class UpdateCoupon extends PartialType(CreateCoupon) {
   id: Coupon['id']
 }
-

@@ -10,7 +10,11 @@ registerEnumType(Prisma.CouponScalarFieldEnum, {
 
 @ArgsType()
 class FindManyCouponArgsStrict
-  implements RestrictProperties<FindManyCouponArgsStrict, Omit<Prisma.CouponFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyCouponArgsStrict,
+      Omit<Prisma.CouponFindManyArgs, 'include' | 'select'>
+    >
 {
   where: CouponWhereInput
   orderBy: CouponOrderByWithRelationInput[]
@@ -22,9 +26,7 @@ class FindManyCouponArgsStrict
 }
 
 @ArgsType()
-export class FindManyCouponArgs extends PartialType(
-  FindManyCouponArgsStrict,
-) {}
+export class FindManyCouponArgs extends PartialType(FindManyCouponArgsStrict) {}
 
 @ArgsType()
 export class FindUniqueCouponArgs {

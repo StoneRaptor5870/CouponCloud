@@ -1,6 +1,11 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { $Enums, Prisma, CouponStatus } from '@prisma/client'
-import { StringFilter, DateTimeFilter, IntFilter, RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  StringFilter,
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+} from 'src/common/dtos/common.input'
 import { CompanyRelationFilter } from 'src/models/companies/graphql/dtos/where.args'
 import { CustomerRelationFilter } from 'src/models/customers/graphql/dtos/where.args'
 
@@ -22,7 +27,13 @@ export class EnumCouponStatusFilter {
 }
 
 @InputType()
-export class CouponWhereInputStrict implements RestrictProperties<CouponWhereInputStrict, Omit<Prisma.CouponWhereInput, 'reviews' | 'CouponHistory'>> {
+export class CouponWhereInputStrict
+  implements
+    RestrictProperties<
+      CouponWhereInputStrict,
+      Omit<Prisma.CouponWhereInput, 'reviews' | 'CouponHistory'>
+    >
+{
   id: StringFilter
   code: StringFilter
   description: StringFilter
@@ -46,9 +57,7 @@ export class CouponWhereInputStrict implements RestrictProperties<CouponWhereInp
 }
 
 @InputType()
-export class CouponWhereInput extends PartialType(
-  CouponWhereInputStrict,
-) {}
+export class CouponWhereInput extends PartialType(CouponWhereInputStrict) {}
 
 @InputType()
 export class CouponListRelationFilter {
