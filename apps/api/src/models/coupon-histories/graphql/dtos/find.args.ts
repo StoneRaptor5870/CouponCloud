@@ -1,7 +1,10 @@
 import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { CouponHistoryOrderByWithRelationInput } from './order-by.args'
-import { CouponHistoryWhereInput, CouponHistoryWhereUniqueInput } from './where.args'
+import {
+  CouponHistoryWhereInput,
+  CouponHistoryWhereUniqueInput,
+} from './where.args'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
 registerEnumType(Prisma.CouponHistoryScalarFieldEnum, {
@@ -10,7 +13,11 @@ registerEnumType(Prisma.CouponHistoryScalarFieldEnum, {
 
 @ArgsType()
 class FindManyCouponHistoryArgsStrict
-  implements RestrictProperties<FindManyCouponHistoryArgsStrict, Omit<Prisma.CouponHistoryFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyCouponHistoryArgsStrict,
+      Omit<Prisma.CouponHistoryFindManyArgs, 'include' | 'select'>
+    >
 {
   where: CouponHistoryWhereInput
   orderBy: CouponHistoryOrderByWithRelationInput[]

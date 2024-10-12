@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyCouponHistoryArgs, FindUniqueCouponHistoryArgs } from './dtos/find.args'
+import {
+  FindManyCouponHistoryArgs,
+  FindUniqueCouponHistoryArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateCouponHistoryInput } from './dtos/create-coupon-history.input'
 import { UpdateCouponHistoryInput } from './dtos/update-coupon-history.input'

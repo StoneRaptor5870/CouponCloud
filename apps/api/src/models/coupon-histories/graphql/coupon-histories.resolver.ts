@@ -1,7 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { CouponHistoriesService } from './coupon-histories.service'
 import { CouponHistory } from './entity/coupon-history.entity'
-import { FindManyCouponHistoryArgs, FindUniqueCouponHistoryArgs } from './dtos/find.args'
+import {
+  FindManyCouponHistoryArgs,
+  FindUniqueCouponHistoryArgs,
+} from './dtos/find.args'
 import { CreateCouponHistoryInput } from './dtos/create-coupon-history.input'
 import { UpdateCouponHistoryInput } from './dtos/update-coupon-history.input'
 import { checkRowLevelPermission } from 'src/common/auth/util'
@@ -11,12 +14,17 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 
 @Resolver(() => CouponHistory)
 export class CouponHistoriesResolver {
-  constructor(private readonly couponHistoriesService: CouponHistoriesService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly couponHistoriesService: CouponHistoriesService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => CouponHistory)
-  createCouponHistory(@Args('createCouponHistoryInput') args: CreateCouponHistoryInput, @GetUser() user: GetUserType) {
+  createCouponHistory(
+    @Args('createCouponHistoryInput') args: CreateCouponHistoryInput,
+    @GetUser() user: GetUserType,
+  ) {
     checkRowLevelPermission(user, args.id)
     return this.couponHistoriesService.create(args)
   }
@@ -33,15 +41,23 @@ export class CouponHistoriesResolver {
 
   @AllowAuthenticated()
   @Mutation(() => CouponHistory)
-  async updateCouponHistory(@Args('updateCouponHistoryInput') args: UpdateCouponHistoryInput, @GetUser() user: GetUserType) {
-    const couponHistory = await this.prisma.couponHistory.findUnique({ where: { id: args.id } })
+  async updateCouponHistory(
+    @Args('updateCouponHistoryInput') args: UpdateCouponHistoryInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const couponHistory = await this.prisma.couponHistory.findUnique({
+      where: { id: args.id },
+    })
     checkRowLevelPermission(user, couponHistory.id)
     return this.couponHistoriesService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => CouponHistory)
-  async removeCouponHistory(@Args() args: FindUniqueCouponHistoryArgs, @GetUser() user: GetUserType) {
+  async removeCouponHistory(
+    @Args() args: FindUniqueCouponHistoryArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const couponHistory = await this.prisma.couponHistory.findUnique(args)
     checkRowLevelPermission(user, couponHistory.id)
     return this.couponHistoriesService.remove(args)

@@ -3,6 +3,8 @@ import { InputType, PartialType } from '@nestjs/graphql'
 import { CouponHistory } from '@prisma/client'
 
 @InputType()
-export class UpdateCouponHistoryInput extends PartialType(CreateCouponHistoryInput) {
+export class UpdateCouponHistoryInput extends PartialType(
+  CreateCouponHistoryInput,
+) {
   id: CouponHistory['id']
 }

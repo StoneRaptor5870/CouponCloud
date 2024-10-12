@@ -31,10 +31,7 @@ export class EnumCouponStatusFilter {
 @InputType()
 export class CouponWhereInputStrict
   implements
-    RestrictProperties<
-      CouponWhereInputStrict,
-      Prisma.CouponWhereInput
-    >
+    RestrictProperties<CouponWhereInputStrict, Prisma.CouponWhereInput>
 {
   id: StringFilter
   code: StringFilter

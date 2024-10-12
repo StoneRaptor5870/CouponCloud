@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('coupon-histories')
 @Controller('coupon-histories')
 export class CouponHistoriesController {
@@ -27,7 +33,10 @@ export class CouponHistoriesController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: CouponHistoryEntity })
   @Post()
-  create(@Body() createCouponHistoryDto: CreateCouponHistory, @GetUser() user: GetUserType) {
+  create(
+    @Body() createCouponHistoryDto: CreateCouponHistory,
+    @GetUser() user: GetUserType,
+  ) {
     // checkRowLevelPermission(user, createCouponHistoryDto.id)
     return this.prisma.couponHistory.create({ data: createCouponHistoryDto })
   }
@@ -57,7 +66,9 @@ export class CouponHistoriesController {
     @Body() updateCouponHistoryDto: UpdateCouponHistory,
     @GetUser() user: GetUserType,
   ) {
-    const couponHistory = await this.prisma.couponHistory.findUnique({ where: { id } })
+    const couponHistory = await this.prisma.couponHistory.findUnique({
+      where: { id },
+    })
     checkRowLevelPermission(user, couponHistory.id)
     return this.prisma.couponHistory.update({
       where: { id },
@@ -69,7 +80,9 @@ export class CouponHistoriesController {
   @AllowAuthenticated()
   @Delete(':id')
   async remove(@Param('id') id: string, @GetUser() user: GetUserType) {
-    const couponHistory = await this.prisma.couponHistory.findUnique({ where: { id } })
+    const couponHistory = await this.prisma.couponHistory.findUnique({
+      where: { id },
+    })
     checkRowLevelPermission(user, couponHistory.id)
     return this.prisma.couponHistory.delete({ where: { id } })
   }

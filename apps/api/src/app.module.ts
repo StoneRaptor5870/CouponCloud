@@ -44,7 +44,7 @@ const MAX_AGE = 24 * 60 * 60
     CouponsModule,
     ReviewsModule,
     ExpiredCouponsModule,
-    CouponHistoriesModule
+    CouponHistoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -16,10 +16,7 @@ export class CompanyWhereUniqueInput {
 @InputType()
 export class CompanyWhereInputStrict
   implements
-    RestrictProperties<
-      CompanyWhereInputStrict,
-      Prisma.CompanyWhereInput
-    >
+    RestrictProperties<CompanyWhereInputStrict, Prisma.CompanyWhereInput>
 {
   id: StringFilter
   name: StringFilter
