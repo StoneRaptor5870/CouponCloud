@@ -5,6 +5,9 @@ import {
   StringFilter,
   RestrictProperties,
 } from 'src/common/dtos/common.input'
+import { CouponHistoryListRelationFilter } from 'src/models/coupon-histories/graphql/dtos/where.args'
+import { CustomerRelationFilter } from 'src/models/customers/graphql/dtos/where.args'
+import { ManagerRelationFilter } from 'src/models/managers/graphql/dtos/where.args'
 
 @InputType()
 export class UserWhereUniqueInput {
@@ -22,12 +25,12 @@ export class UserWhereInputStrict
         | 'AuthProvider'
         | 'Admin'
         | 'image'
-        | 'Manager'
-        | 'Customer'
-        | 'CouponHistory'
       >
     >
 {
+  CouponHistory: CouponHistoryListRelationFilter
+  Manager: ManagerRelationFilter
+  Customer: CustomerRelationFilter
   id: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter

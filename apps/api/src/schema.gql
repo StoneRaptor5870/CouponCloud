@@ -96,6 +96,22 @@ type ExpiredCoupon {
   archivedAt: DateTime!
 }
 
+type CouponHistory {
+  action: CouponAction!
+  id: String!
+  couponId: String!
+  timestamp: DateTime!
+  performedBy: String!
+}
+
+enum CouponAction {
+  CREATED
+  ASSIGNED
+  REDEEMED
+  EXPIRED
+  REVOKED
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Float, skip: Float): [User!]!
@@ -114,6 +130,8 @@ type Query {
   review(where: ReviewWhereUniqueInput!): Review!
   expiredCoupons(distinct: [ExpiredCouponScalarFieldEnum!], where: ExpiredCouponWhereInput, orderBy: [ExpiredCouponOrderByWithRelationInput!], cursor: ExpiredCouponWhereUniqueInput, take: Float, skip: Float): [ExpiredCoupon!]!
   expiredCoupon(where: ExpiredCouponWhereUniqueInput!): ExpiredCoupon!
+  couponHistories(distinct: [CouponHistoryScalarFieldEnum!], where: CouponHistoryWhereInput, orderBy: [CouponHistoryOrderByWithRelationInput!], cursor: CouponHistoryWhereUniqueInput, take: Float, skip: Float): [CouponHistory!]!
+  couponHistory(where: CouponHistoryWhereUniqueInput!): CouponHistory!
 }
 
 enum UserScalarFieldEnum {
@@ -125,6 +143,9 @@ enum UserScalarFieldEnum {
 }
 
 input UserWhereInput {
+  CouponHistory: CouponHistoryListRelationFilter
+  Manager: ManagerRelationFilter
+  Customer: CustomerRelationFilter
   id: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
@@ -132,6 +153,25 @@ input UserWhereInput {
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
+}
+
+input CouponHistoryListRelationFilter {
+  every: CouponHistoryWhereInput
+  some: CouponHistoryWhereInput
+  none: CouponHistoryWhereInput
+}
+
+input CouponHistoryWhereInput {
+  id: StringFilter
+  couponId: StringFilter
+  action: EnumCouponActionFilter
+  timestamp: DateTimeFilter
+  performedBy: StringFilter
+  coupon: CouponRelationFilter
+  user: UserRelationFilter
+  AND: [CouponHistoryWhereInput!]
+  OR: [CouponHistoryWhereInput!]
+  NOT: [CouponHistoryWhereInput!]
 }
 
 input StringFilter {
@@ -154,6 +194,13 @@ enum QueryMode {
   insensitive
 }
 
+input EnumCouponActionFilter {
+  equals: CouponAction
+  in: [CouponAction!]
+  notIn: [CouponAction!]
+  not: CouponAction
+}
+
 input DateTimeFilter {
   equals: String
   in: [String!]
@@ -164,157 +211,9 @@ input DateTimeFilter {
   gte: String
 }
 
-input UserOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  name: SortOrder
-}
-
-enum SortOrder {
-  asc
-  desc
-}
-
-input UserWhereUniqueInput {
-  id: String!
-}
-
-enum AdminScalarFieldEnum {
-  id
-  userId
-  createdAt
-  updatedAt
-}
-
-input AdminWhereInput {
-  id: StringFilter
-  userId: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  user: UserRelationFilter
-  AND: [AdminWhereInput!]
-  OR: [AdminWhereInput!]
-  NOT: [AdminWhereInput!]
-}
-
-input UserRelationFilter {
-  is: UserWhereInput
-  isNot: UserWhereInput
-}
-
-input AdminOrderByWithRelationInput {
-  id: SortOrder
-  userId: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  user: UserOrderByWithRelationInput
-}
-
-input AdminWhereUniqueInput {
-  id: String!
-}
-
-enum ManagerScalarFieldEnum {
-  id
-  userId
-  displayName
-  companyId
-  createdAt
-  updatedAt
-}
-
-input ManagerWhereInput {
-  displayName: StringFilter
-  id: StringFilter
-  userId: StringFilter
-  companyId: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  user: UserRelationFilter
-  company: CompanyRelationFilter
-  AND: [ManagerWhereInput!]
-  OR: [ManagerWhereInput!]
-  NOT: [ManagerWhereInput!]
-}
-
-input CompanyRelationFilter {
-  is: CompanyWhereInput
-  isNot: CompanyWhereInput
-}
-
-input CompanyWhereInput {
-  id: StringFilter
-  name: StringFilter
-  displayName: StringFilter
-  description: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  managers: ManagerListRelationFilter
-  AND: [CompanyWhereInput!]
-  OR: [CompanyWhereInput!]
-  NOT: [CompanyWhereInput!]
-}
-
-input ManagerListRelationFilter {
-  every: ManagerWhereInput
-  some: ManagerWhereInput
-  none: ManagerWhereInput
-}
-
-input ManagerOrderByWithRelationInput {
-  displayName: SortOrder
-  id: SortOrder
-  userId: SortOrder
-  companyId: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  user: UserOrderByWithRelationInput
-  company: CompanyOrderByWithRelationInput
-}
-
-input CompanyOrderByWithRelationInput {
-  id: SortOrder
-  name: SortOrder
-  displayName: SortOrder
-  description: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  managers: ManagerOrderByRelationAggregateInput
-}
-
-input ManagerOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input ManagerWhereUniqueInput {
-  id: String!
-}
-
-enum CustomerScalarFieldEnum {
-  id
-  userId
-  createdAt
-  updatedAt
-}
-
-input CustomerWhereInput {
-  id: StringFilter
-  userId: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  user: UserRelationFilter
-  coupons: CouponListRelationFilter
-  reviews: ReviewListRelationFilter
-  AND: [CustomerWhereInput!]
-  OR: [CustomerWhereInput!]
-  NOT: [CustomerWhereInput!]
-}
-
-input CouponListRelationFilter {
-  every: CouponWhereInput
-  some: CouponWhereInput
-  none: CouponWhereInput
+input CouponRelationFilter {
+  is: CouponWhereInput
+  isNot: CouponWhereInput
 }
 
 input CouponWhereInput {
@@ -331,6 +230,7 @@ input CouponWhereInput {
   company: CompanyRelationFilter
   customer: CustomerRelationFilter
   reviews: ReviewListRelationFilter
+  CouponHistory: CouponHistoryListRelationFilter
   AND: [CouponWhereInput!]
   OR: [CouponWhereInput!]
   NOT: [CouponWhereInput!]
@@ -351,9 +251,72 @@ input EnumCouponStatusFilter {
   not: CouponStatus
 }
 
+input CompanyRelationFilter {
+  is: CompanyWhereInput
+  isNot: CompanyWhereInput
+}
+
+input CompanyWhereInput {
+  id: StringFilter
+  name: StringFilter
+  displayName: StringFilter
+  description: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  coupons: CouponListRelationFilter
+  managers: ManagerListRelationFilter
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
+  NOT: [CompanyWhereInput!]
+}
+
+input CouponListRelationFilter {
+  every: CouponWhereInput
+  some: CouponWhereInput
+  none: CouponWhereInput
+}
+
+input ManagerListRelationFilter {
+  every: ManagerWhereInput
+  some: ManagerWhereInput
+  none: ManagerWhereInput
+}
+
+input ManagerWhereInput {
+  displayName: StringFilter
+  id: StringFilter
+  userId: StringFilter
+  companyId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  company: CompanyRelationFilter
+  AND: [ManagerWhereInput!]
+  OR: [ManagerWhereInput!]
+  NOT: [ManagerWhereInput!]
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
 input CustomerRelationFilter {
   is: CustomerWhereInput
   isNot: CustomerWhereInput
+}
+
+input CustomerWhereInput {
+  id: StringFilter
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  coupons: CouponListRelationFilter
+  reviews: ReviewListRelationFilter
+  AND: [CustomerWhereInput!]
+  OR: [CustomerWhereInput!]
+  NOT: [CustomerWhereInput!]
 }
 
 input ReviewListRelationFilter {
@@ -383,9 +346,54 @@ input BoolFilter {
   not: Boolean
 }
 
-input CouponRelationFilter {
-  is: CouponWhereInput
-  isNot: CouponWhereInput
+input ManagerRelationFilter {
+  is: ManagerWhereInput
+  isNot: ManagerWhereInput
+}
+
+input UserOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  name: SortOrder
+  Manager: ManagerOrderByWithRelationInput
+  Customer: CustomerOrderByWithRelationInput
+  CouponHistory: CouponHistoryOrderByRelationAggregateInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input ManagerOrderByWithRelationInput {
+  displayName: SortOrder
+  id: SortOrder
+  userId: SortOrder
+  companyId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+  company: CompanyOrderByWithRelationInput
+}
+
+input CompanyOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  displayName: SortOrder
+  description: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  coupons: CouponOrderByRelationAggregateInput
+  managers: ManagerOrderByRelationAggregateInput
+}
+
+input CouponOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ManagerOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input CustomerOrderByWithRelationInput {
@@ -398,12 +406,66 @@ input CustomerOrderByWithRelationInput {
   reviews: ReviewOrderByRelationAggregateInput
 }
 
-input CouponOrderByRelationAggregateInput {
+input ReviewOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
-input ReviewOrderByRelationAggregateInput {
+input CouponHistoryOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}
+
+enum AdminScalarFieldEnum {
+  id
+  userId
+  createdAt
+  updatedAt
+}
+
+input AdminWhereInput {
+  id: StringFilter
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  AND: [AdminWhereInput!]
+  OR: [AdminWhereInput!]
+  NOT: [AdminWhereInput!]
+}
+
+input AdminOrderByWithRelationInput {
+  id: SortOrder
+  userId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+input AdminWhereUniqueInput {
+  id: String!
+}
+
+enum ManagerScalarFieldEnum {
+  id
+  userId
+  displayName
+  companyId
+  createdAt
+  updatedAt
+}
+
+input ManagerWhereUniqueInput {
+  id: String!
+}
+
+enum CustomerScalarFieldEnum {
+  id
+  userId
+  createdAt
+  updatedAt
 }
 
 input CustomerWhereUniqueInput {
@@ -450,6 +512,7 @@ input CouponOrderByWithRelationInput {
   company: CompanyOrderByWithRelationInput
   customer: CustomerOrderByWithRelationInput
   reviews: ReviewOrderByRelationAggregateInput
+  CouponHistory: CouponHistoryOrderByRelationAggregateInput
 }
 
 input CouponWhereUniqueInput {
@@ -521,6 +584,28 @@ input ExpiredCouponWhereUniqueInput {
   id: String!
 }
 
+enum CouponHistoryScalarFieldEnum {
+  id
+  couponId
+  action
+  timestamp
+  performedBy
+}
+
+input CouponHistoryOrderByWithRelationInput {
+  id: SortOrder
+  couponId: SortOrder
+  action: SortOrder
+  timestamp: SortOrder
+  performedBy: SortOrder
+  coupon: CouponOrderByWithRelationInput
+  user: UserOrderByWithRelationInput
+}
+
+input CouponHistoryWhereUniqueInput {
+  id: String!
+}
+
 type Mutation {
   createUserWithCredentials(createUserWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
@@ -548,6 +633,9 @@ type Mutation {
   createExpiredCoupon(createExpiredCouponInput: CreateExpiredCouponInput!): ExpiredCoupon!
   updateExpiredCoupon(updateExpiredCouponInput: UpdateExpiredCouponInput!): ExpiredCoupon!
   removeExpiredCoupon(where: ExpiredCouponWhereUniqueInput!): ExpiredCoupon!
+  createCouponHistory(createCouponHistoryInput: CreateCouponHistoryInput!): CouponHistory!
+  updateCouponHistory(updateCouponHistoryInput: UpdateCouponHistoryInput!): CouponHistory!
+  removeCouponHistory(where: CouponHistoryWhereUniqueInput!): CouponHistory!
 }
 
 input RegisterWithCredentialsInput {
@@ -672,4 +760,18 @@ input UpdateExpiredCouponInput {
   companyId: String
   archivedAt: DateTime
   id: String!
+}
+
+input CreateCouponHistoryInput {
+  action: CouponAction!
+  id: String!
+  couponId: String!
+  performedBy: String!
+}
+
+input UpdateCouponHistoryInput {
+  action: CouponAction
+  id: String!
+  couponId: String
+  performedBy: String
 }
