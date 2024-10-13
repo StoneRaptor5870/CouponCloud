@@ -24,8 +24,6 @@ export class CouponHistoryOrderByWithRelationInputStrict
   performedBy: Prisma.SortOrder
   coupon: CouponOrderByWithRelationInput
   user: UserOrderByWithRelationInput
-  // Todo: Add below field decorator to the SortOrder properties.
-  // @Field(() => Prisma.SortOrder)
 }
 
 @InputType()

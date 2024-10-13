@@ -27,8 +27,6 @@ export class CustomerWhereInputStrict
   user: UserRelationFilter
   coupons: CouponListRelationFilter
   reviews: ReviewListRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: CustomerWhereInput[]
   OR: CustomerWhereInput[]

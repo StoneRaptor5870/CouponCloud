@@ -16,6 +16,4 @@ export class CouponHistory
   action: $Enums.CouponAction
   timestamp: Date
   performedBy: string
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

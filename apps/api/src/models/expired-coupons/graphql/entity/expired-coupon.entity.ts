@@ -14,6 +14,4 @@ export class ExpiredCoupon
   expiryDate: Date
   companyId: string
   archivedAt: Date
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

@@ -26,8 +26,6 @@ export class CompanyOrderByWithRelationInputStrict
   updatedAt: Prisma.SortOrder
   coupons: CouponOrderByRelationAggregateInput
   managers: ManagerOrderByRelationAggregateInput
-  // Todo: Add below field decorator to the SortOrder properties.
-  // @Field(() => Prisma.SortOrder)
 }
 
 @InputType()

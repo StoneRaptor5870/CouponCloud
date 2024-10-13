@@ -21,6 +21,4 @@ export class Coupon implements RestrictProperties<Coupon, CouponType> {
   companyId: string
   @Field({ nullable: true })
   customerId: string
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

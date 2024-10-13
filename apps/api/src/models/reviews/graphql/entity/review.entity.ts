@@ -13,6 +13,4 @@ export class Review implements RestrictProperties<Review, ReviewType> {
   comment: string
   flagged: boolean
   couponId: string
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

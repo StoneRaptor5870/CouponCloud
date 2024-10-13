@@ -40,8 +40,6 @@ export class CouponHistoryWhereInputStrict
   performedBy: StringFilter
   coupon: CouponRelationFilter
   user: UserRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: CouponHistoryWhereInput[]
   OR: CouponHistoryWhereInput[]

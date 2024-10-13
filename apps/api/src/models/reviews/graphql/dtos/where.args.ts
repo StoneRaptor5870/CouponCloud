@@ -30,8 +30,6 @@ export class ReviewWhereInputStrict
   updatedAt: DateTimeFilter
   customer: CustomerRelationFilter
   coupon: CouponRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: ReviewWhereInput[]
   OR: ReviewWhereInput[]

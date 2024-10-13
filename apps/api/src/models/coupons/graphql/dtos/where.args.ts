@@ -47,8 +47,6 @@ export class CouponWhereInputStrict
   customer: CustomerRelationFilter
   reviews: ReviewListRelationFilter
   CouponHistory: CouponHistoryListRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: CouponWhereInput[]
   OR: CouponWhereInput[]

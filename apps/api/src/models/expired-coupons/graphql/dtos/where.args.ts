@@ -27,8 +27,6 @@ export class ExpiredCouponWhereInputStrict
   expiryDate: DateTimeFilter
   companyId: StringFilter
   archivedAt: DateTimeFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: ExpiredCouponWhereInput[]
   OR: ExpiredCouponWhereInput[]

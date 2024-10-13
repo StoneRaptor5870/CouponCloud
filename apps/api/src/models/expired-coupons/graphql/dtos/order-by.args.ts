@@ -24,8 +24,6 @@ export class ExpiredCouponOrderByWithRelationInputStrict
   companyId: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
   archivedAt: Prisma.SortOrder
-  // Todo: Add below field decorator to the SortOrder properties.
-  // @Field(() => Prisma.SortOrder)
 }
 
 @InputType()

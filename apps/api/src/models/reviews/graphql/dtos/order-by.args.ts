@@ -30,8 +30,6 @@ export class ReviewOrderByWithRelationInputStrict
   updatedAt: Prisma.SortOrder
   customer: CustomerOrderByWithRelationInput
   coupon: CouponOrderByWithRelationInput
-  // Todo: Add below field decorator to the SortOrder properties.
-  // @Field(() => Prisma.SortOrder)
 }
 
 @InputType()

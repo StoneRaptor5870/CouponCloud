@@ -21,8 +21,6 @@ export class AdminWhereInputStrict
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   user: UserRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: AdminWhereInput[]
   OR: AdminWhereInput[]

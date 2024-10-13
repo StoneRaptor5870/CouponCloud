@@ -8,6 +8,4 @@ export class Admin implements RestrictProperties<Admin, AdminType> {
   createdAt: Date
   updatedAt: Date
   userId: string
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

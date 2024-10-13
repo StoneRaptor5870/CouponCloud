@@ -12,6 +12,4 @@ export class Company implements RestrictProperties<Company, CompanyType> {
   name: string
   @Field({ nullable: true })
   displayName: string
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

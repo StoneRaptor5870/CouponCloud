@@ -26,8 +26,6 @@ export class ManagerOrderByWithRelationInputStrict
   updatedAt: Prisma.SortOrder
   user: UserOrderByWithRelationInput
   company: CompanyOrderByWithRelationInput
-  // Todo: Add below field decorator to the SortOrder properties.
-  // @Field(() => Prisma.SortOrder)
 }
 
 @InputType()

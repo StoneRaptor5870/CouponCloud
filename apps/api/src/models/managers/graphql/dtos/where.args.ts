@@ -26,8 +26,6 @@ export class ManagerWhereInputStrict
   updatedAt: DateTimeFilter
   user: UserRelationFilter
   company: CompanyRelationFilter
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
 
   AND: ManagerWhereInput[]
   OR: ManagerWhereInput[]
