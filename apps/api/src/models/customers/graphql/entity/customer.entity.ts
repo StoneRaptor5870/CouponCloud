@@ -10,6 +10,4 @@ export class Customer implements RestrictProperties<Customer, CustomerType> {
   userId: string
   createdAt: Date
   updatedAt: Date
-  // Todo Add below to make optional fields optional.
-  // @Field({ nullable: true })
 }

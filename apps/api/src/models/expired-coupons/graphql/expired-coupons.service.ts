@@ -11,10 +11,9 @@ import { UpdateExpiredCouponInput } from './dtos/update-expired-coupon.input'
 export class ExpiredCouponsService {
   constructor(private readonly prisma: PrismaService) {}
   create(createExpiredCouponInput: CreateExpiredCouponInput) {
-    // TODO
-    // return this.prisma.expiredCoupon.create({
-    //   data: createExpiredCouponInput,
-    // })
+    return this.prisma.expiredCoupon.create({
+      data: createExpiredCouponInput,
+    })
   }
 
   findAll(args: FindManyExpiredCouponArgs) {

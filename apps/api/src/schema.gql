@@ -767,6 +767,8 @@ input CreateExpiredCouponInput {
   code: String!
   discount: Float!
   expiryDate: DateTime!
+  companyId: String!
+  managerId: String!
 }
 
 input UpdateExpiredCouponInput {
@@ -774,6 +776,8 @@ input UpdateExpiredCouponInput {
   code: String
   discount: Float
   expiryDate: DateTime
+  companyId: String
+  managerId: String
   id: String!
 }
 

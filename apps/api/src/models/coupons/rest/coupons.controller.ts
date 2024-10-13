@@ -34,8 +34,7 @@ export class CouponsController {
   @ApiCreatedResponse({ type: CouponEntity })
   @Post()
   create(@Body() createCouponDto: CreateCoupon, @GetUser() user: GetUserType) {
-    // TODO; Undo
-    // checkRowLevelPermission(user, createCouponDto.id)
+    checkRowLevelPermission(user, createCouponDto.customerId)
     return this.prisma.coupon.create({ data: createCouponDto })
   }
 
