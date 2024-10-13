@@ -75,7 +75,6 @@ enum AuthProviderType {
 
 model Company {
   id          String    @id @default(uuid())
-  name        String
   coupons     Coupon[]
   managers    Manager[]
   displayName String?

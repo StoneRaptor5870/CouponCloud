@@ -9,7 +9,6 @@ export class Company implements RestrictProperties<Company, CompanyType> {
   createdAt: Date
   updatedAt: Date
   id: string
-  name: string
   @Field({ nullable: true })
   displayName: string
 }

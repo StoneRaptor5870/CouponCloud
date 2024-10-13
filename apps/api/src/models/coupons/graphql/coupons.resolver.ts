@@ -22,7 +22,9 @@ export class CouponsResolver {
     @Args('createCouponInput') args: CreateCouponInput,
     @GetUser() user: GetUserType,
   ) {
-    checkRowLevelPermission(user, args.customerId)
+    const managerId = args.managerId
+
+    checkRowLevelPermission(user, managerId)
     return this.couponsService.create(args)
   }
 

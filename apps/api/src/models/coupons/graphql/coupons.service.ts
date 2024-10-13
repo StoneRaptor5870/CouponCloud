@@ -13,16 +13,16 @@ export class CouponsService {
     discount,
     expiryDate,
     status,
-    customerId,
+    managerId,
     companyId,
   }: CreateCouponInput) {
-    const customer = await this.prisma.customer.findUnique({
-      where: { userId: customerId },
+    const customer = await this.prisma.manager.findUnique({
+      where: { userId: managerId },
     })
 
     if (!customer?.userId) {
       await this.prisma.customer.create({
-        data: { userId: customerId },
+        data: { userId: managerId },
       })
     }
 
@@ -33,7 +33,6 @@ export class CouponsService {
         discount,
         expiryDate,
         status,
-        customerId,
         companyId,
       },
     })

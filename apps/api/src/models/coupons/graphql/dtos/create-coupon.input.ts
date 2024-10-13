@@ -4,14 +4,9 @@ import { Coupon } from '../entity/coupon.entity'
 @InputType()
 export class CreateCouponInput extends PickType(
   Coupon,
-  [
-    'code',
-    'description',
-    'discount',
-    'expiryDate',
-    'status',
-    'customerId',
-    'companyId',
-  ],
+  ['code', 'description', 'discount', 'expiryDate', 'status', 'companyId'],
   InputType,
-) {}
+) {
+  managerId?: string
+  managerName?: string
+}

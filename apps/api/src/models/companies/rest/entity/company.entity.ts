@@ -6,7 +6,6 @@ export class CompanyEntity
   implements RestrictProperties<CompanyEntity, Company>
 {
   id: string
-  name: string
   @IsOptional()
   description: string
   createdAt: Date

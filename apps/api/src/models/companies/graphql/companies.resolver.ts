@@ -33,7 +33,7 @@ export class CompaniesResolver {
   ) {
     const managerId = args.managerId
 
-    checkRowLevelPermission(user, managerId)
+    // checkRowLevelPermission(user, managerId)
     return this.companiesService.create(args)
   }
 
@@ -96,7 +96,7 @@ export class CompaniesResolver {
   }
 
   @ResolveField(() => [Coupon])
-  garages(@Parent() company: Company) {
+  coupons(@Parent() company: Company) {
     return this.prisma.coupon.findMany({ where: { companyId: company.id } })
   }
 }

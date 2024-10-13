@@ -30,11 +30,11 @@ type Admin {
 
 type Manager {
   displayName: String
+  companyId: String
   id: String!
   userId: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  companyId: String!
   company: Company
 }
 
@@ -44,9 +44,8 @@ type Company {
   createdAt: DateTime!
   updatedAt: DateTime!
   id: String!
-  name: String!
   managers: [Manager!]!
-  garages: [Coupon!]!
+  coupons: [Coupon!]!
 }
 
 type Customer {
@@ -264,7 +263,6 @@ input CompanyRelationFilter {
 
 input CompanyWhereInput {
   id: StringFilter
-  name: StringFilter
   displayName: StringFilter
   description: StringFilter
   createdAt: DateTimeFilter
@@ -386,7 +384,6 @@ input ManagerOrderByWithRelationInput {
 
 input CompanyOrderByWithRelationInput {
   id: SortOrder
-  name: SortOrder
   displayName: SortOrder
   description: SortOrder
   createdAt: SortOrder
@@ -483,7 +480,6 @@ input CustomerWhereUniqueInput {
 
 enum CompanyScalarFieldEnum {
   id
-  name
   displayName
   description
   createdAt
@@ -686,11 +682,13 @@ input UpdateAdminInput {
 
 input CreateManagerInput {
   displayName: String
+  companyId: String
   userId: String!
 }
 
 input UpdateManagerInput {
   displayName: String
+  companyId: String
   userId: String
   id: String!
 }
@@ -709,39 +707,38 @@ input UpdateCustomerInput {
 input CreateCompanyInput {
   description: String
   displayName: String
-  id: String!
-  name: String!
-  managerId: String!
+  managerId: String
   managerName: String
 }
 
 input UpdateCompanyInput {
   description: String
   displayName: String
-  id: String!
-  name: String
   managerId: String
   managerName: String
+  id: String!
 }
 
 input CreateCouponInput {
   description: String
   status: CouponStatus!
-  customerId: String
   code: String!
   discount: Float!
   expiryDate: DateTime!
   companyId: String!
+  managerId: String
+  managerName: String
 }
 
 input UpdateCouponInput {
   description: String
   status: CouponStatus
-  customerId: String
   code: String
   discount: Float
   expiryDate: DateTime
   companyId: String
+  managerId: String
+  managerName: String
   id: String!
 }
 

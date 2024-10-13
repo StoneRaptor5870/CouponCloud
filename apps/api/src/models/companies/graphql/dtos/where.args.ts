@@ -19,7 +19,6 @@ export class CompanyWhereInputStrict
     RestrictProperties<CompanyWhereInputStrict, Prisma.CompanyWhereInput>
 {
   id: StringFilter
-  name: StringFilter
   displayName: StringFilter
   description: StringFilter
   createdAt: DateTimeFilter

@@ -10,5 +10,6 @@ export class Manager implements RestrictProperties<Manager, ManagerType> {
   userId: string
   createdAt: Date
   updatedAt: Date
+  @Field({ nullable: true })
   companyId: string
 }

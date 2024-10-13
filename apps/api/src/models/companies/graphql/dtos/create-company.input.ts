@@ -4,9 +4,9 @@ import { Company } from '../entity/company.entity'
 @InputType()
 export class CreateCompanyInput extends PickType(
   Company,
-  ['id', 'name', 'description', 'displayName'],
+  ['description', 'displayName'],
   InputType,
 ) {
-  managerId: string
+  managerId?: string
   managerName?: string
 }

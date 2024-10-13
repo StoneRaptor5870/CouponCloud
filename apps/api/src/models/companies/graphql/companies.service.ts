@@ -9,7 +9,6 @@ export class CompaniesService {
   constructor(private readonly prisma: PrismaService) {}
   create({
     description,
-    name,
     displayName,
     managerId,
     managerName,
@@ -17,7 +16,6 @@ export class CompaniesService {
     return this.prisma.company.create({
       data: {
         description,
-        name,
         displayName,
         managers: {
           create: {

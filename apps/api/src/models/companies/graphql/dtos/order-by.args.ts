@@ -15,8 +15,6 @@ export class CompanyOrderByWithRelationInputStrict
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
-  name: Prisma.SortOrder
-  @Field(() => Prisma.SortOrder)
   displayName: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
   description: Prisma.SortOrder
