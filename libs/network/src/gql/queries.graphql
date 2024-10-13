@@ -1,0 +1,31 @@
+mutation createUserWithCredentials($createUserWithCredentialsInput: RegisterWithCredentialsInput!) {
+  createUserWithCredentials(createUserWithCredentialsInput: $createUserWithCredentialsInput) {
+    createdAt
+    id
+    image
+    name
+    updatedAt
+  }
+}
+
+mutation registerWithProvider($registerWithProviderInput: RegisterWithProviderInput!) {
+  registerWithProvider(registerWithProviderInput: $registerWithProviderInput) {
+    createdAt
+    id
+    image
+    name
+    updatedAt
+  }
+}
+
+mutation login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    token
+    user {
+      id
+      image
+      name
+    }
+  }
+}
+
