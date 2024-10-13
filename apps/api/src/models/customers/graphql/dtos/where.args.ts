@@ -19,6 +19,7 @@ export class CustomerWhereInputStrict
   implements
     RestrictProperties<CustomerWhereInputStrict, Prisma.CustomerWhereInput>
 {
+  displayName: StringFilter
   id: StringFilter
   userId: StringFilter
   createdAt: DateTimeFilter

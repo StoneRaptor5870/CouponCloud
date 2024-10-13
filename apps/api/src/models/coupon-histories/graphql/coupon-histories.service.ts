@@ -10,9 +10,33 @@ import { UpdateCouponHistoryInput } from './dtos/update-coupon-history.input'
 @Injectable()
 export class CouponHistoriesService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createCouponHistoryInput: CreateCouponHistoryInput) {
+  create({
+    action,
+    performedBy,
+    couponId,
+    couponCode,
+    expiryDate,
+    companyId,
+    discount,
+  }: CreateCouponHistoryInput) {
     return this.prisma.couponHistory.create({
-      data: createCouponHistoryInput,
+      data: {
+        action,
+        user: {
+          create: {
+            id: performedBy,
+          },
+        },
+        coupon: {
+          create: {
+            id: couponId,
+            code: couponCode,
+            expiryDate,
+            companyId,
+            discount,
+          },
+        },
+      },
     })
   }
 

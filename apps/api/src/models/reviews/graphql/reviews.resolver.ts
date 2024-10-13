@@ -16,13 +16,13 @@ export class ReviewsResolver {
     private readonly prisma: PrismaService,
   ) {}
 
-  // @AllowAuthenticated()
+  @AllowAuthenticated()
   @Mutation(() => Review)
   createReview(
     @Args('createReviewInput') args: CreateReviewInput,
     @GetUser() user: GetUserType,
   ) {
-    // checkRowLevelPermission(user, args.id)
+    checkRowLevelPermission(user, args.customerId)
     return this.reviewsService.create(args)
   }
 
@@ -45,7 +45,7 @@ export class ReviewsResolver {
     const review = await this.prisma.review.findUnique({
       where: { id: args.id },
     })
-    checkRowLevelPermission(user, review.id)
+    checkRowLevelPermission(user, review.customerId)
     return this.reviewsService.update(args)
   }
 
@@ -56,7 +56,7 @@ export class ReviewsResolver {
     @GetUser() user: GetUserType,
   ) {
     const review = await this.prisma.review.findUnique(args)
-    checkRowLevelPermission(user, review.id)
+    checkRowLevelPermission(user, review.customerId)
     return this.reviewsService.remove(args)
   }
 }

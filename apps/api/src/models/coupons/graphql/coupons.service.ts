@@ -7,9 +7,35 @@ import { UpdateCouponInput } from './dtos/update-coupon.input'
 @Injectable()
 export class CouponsService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createCouponInput: CreateCouponInput) {
+  async create({
+    code,
+    description,
+    discount,
+    expiryDate,
+    status,
+    customerId,
+    companyId,
+  }: CreateCouponInput) {
+    const customer = await this.prisma.customer.findUnique({
+      where: { userId: customerId },
+    })
+
+    if (!customer?.userId) {
+      await this.prisma.customer.create({
+        data: { userId: customerId },
+      })
+    }
+
     return this.prisma.coupon.create({
-      data: createCouponInput,
+      data: {
+        code,
+        description,
+        discount,
+        expiryDate,
+        status,
+        customerId,
+        companyId,
+      },
     })
   }
 

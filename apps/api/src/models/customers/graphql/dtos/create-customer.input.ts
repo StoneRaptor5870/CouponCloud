@@ -4,6 +4,6 @@ import { Customer } from '../entity/customer.entity'
 @InputType()
 export class CreateCustomerInput extends PickType(
   Customer,
-  ['userId'],
+  ['userId', 'displayName'],
   InputType,
 ) {}

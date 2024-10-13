@@ -17,6 +17,7 @@ scalar DateTime
 
 type LoginOutput {
   token: String!
+  user: User!
 }
 
 type Admin {
@@ -29,11 +30,11 @@ type Admin {
 
 type Manager {
   displayName: String
-  companyId: String
   id: String!
   userId: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  companyId: String!
   company: Company
 }
 
@@ -45,14 +46,17 @@ type Company {
   id: String!
   name: String!
   managers: [Manager!]!
+  garages: [Coupon!]!
 }
 
 type Customer {
+  displayName: String
   id: String!
   userId: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User
+  bookings: [Coupon!]!
 }
 
 type Coupon {
@@ -118,11 +122,13 @@ type Query {
   user(where: UserWhereUniqueInput!): User!
   admins(distinct: [AdminScalarFieldEnum!], where: AdminWhereInput, orderBy: [AdminOrderByWithRelationInput!], cursor: AdminWhereUniqueInput, take: Float, skip: Float): [Admin!]!
   admin(where: AdminWhereUniqueInput!): Admin!
+  adminMe: Admin!
   managers(distinct: [ManagerScalarFieldEnum!], where: ManagerWhereInput, orderBy: [ManagerOrderByWithRelationInput!], cursor: ManagerWhereUniqueInput, take: Float, skip: Float): [Manager!]!
   manager(where: ManagerWhereUniqueInput!): Manager!
   customers(distinct: [CustomerScalarFieldEnum!], where: CustomerWhereInput, orderBy: [CustomerOrderByWithRelationInput!], cursor: CustomerWhereUniqueInput, take: Float, skip: Float): [Customer!]!
   customer(where: CustomerWhereUniqueInput!): Customer!
   companies(distinct: [CompanyScalarFieldEnum!], where: CompanyWhereInput, orderBy: [CompanyOrderByWithRelationInput!], cursor: CompanyWhereUniqueInput, take: Float, skip: Float): [Company!]!
+  myCompany: Company!
   company(where: CompanyWhereUniqueInput!): Company!
   coupons(distinct: [CouponScalarFieldEnum!], where: CouponWhereInput, orderBy: [CouponOrderByWithRelationInput!], cursor: CouponWhereUniqueInput, take: Float, skip: Float): [Coupon!]!
   coupon(where: CouponWhereUniqueInput!): Coupon!
@@ -307,6 +313,7 @@ input CustomerRelationFilter {
 }
 
 input CustomerWhereInput {
+  displayName: StringFilter
   id: StringFilter
   userId: StringFilter
   createdAt: DateTimeFilter
@@ -397,6 +404,7 @@ input ManagerOrderByRelationAggregateInput {
 }
 
 input CustomerOrderByWithRelationInput {
+  displayName: SortOrder
   id: SortOrder
   userId: SortOrder
   createdAt: SortOrder
@@ -464,6 +472,7 @@ input ManagerWhereUniqueInput {
 enum CustomerScalarFieldEnum {
   id
   userId
+  displayName
   createdAt
   updatedAt
 }
@@ -639,10 +648,10 @@ type Mutation {
 }
 
 input RegisterWithCredentialsInput {
-  name: String!
+  name: String
+  image: String
   email: String!
   password: String!
-  image: String
 }
 
 input RegisterWithProviderInput {
@@ -676,33 +685,43 @@ input UpdateAdminInput {
 }
 
 input CreateManagerInput {
-  companyId: String
+  displayName: String
   userId: String!
 }
 
 input UpdateManagerInput {
-  companyId: String
+  displayName: String
   userId: String
   id: String!
 }
 
 input CreateCustomerInput {
+  displayName: String
   userId: String!
 }
 
 input UpdateCustomerInput {
+  displayName: String
   userId: String
   id: String!
 }
 
 input CreateCompanyInput {
+  description: String
+  displayName: String
   id: String!
   name: String!
+  managerId: String!
+  managerName: String
 }
 
 input UpdateCompanyInput {
+  description: String
+  displayName: String
   id: String!
   name: String
+  managerId: String
+  managerName: String
 }
 
 input CreateCouponInput {
@@ -748,8 +767,6 @@ input CreateExpiredCouponInput {
   code: String!
   discount: Float!
   expiryDate: DateTime!
-  companyId: String!
-  archivedAt: DateTime!
 }
 
 input UpdateExpiredCouponInput {
@@ -757,21 +774,26 @@ input UpdateExpiredCouponInput {
   code: String
   discount: Float
   expiryDate: DateTime
-  companyId: String
-  archivedAt: DateTime
   id: String!
 }
 
 input CreateCouponHistoryInput {
   action: CouponAction!
-  id: String!
   couponId: String!
   performedBy: String!
+  couponCode: String!
+  discount: Float!
+  expiryDate: String!
+  companyId: String!
 }
 
 input UpdateCouponHistoryInput {
   action: CouponAction
-  id: String!
   couponId: String
   performedBy: String
+  couponCode: String
+  discount: Float
+  expiryDate: String
+  companyId: String
+  id: String!
 }

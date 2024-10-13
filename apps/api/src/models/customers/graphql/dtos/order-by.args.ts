@@ -14,6 +14,8 @@ export class CustomerOrderByWithRelationInputStrict
     >
 {
   @Field(() => Prisma.SortOrder)
+  displayName: Prisma.SortOrder
+  @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
   userId: Prisma.SortOrder

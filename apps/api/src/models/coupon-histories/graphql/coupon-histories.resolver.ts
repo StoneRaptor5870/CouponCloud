@@ -25,7 +25,7 @@ export class CouponHistoriesResolver {
     @Args('createCouponHistoryInput') args: CreateCouponHistoryInput,
     @GetUser() user: GetUserType,
   ) {
-    checkRowLevelPermission(user, args.id)
+    checkRowLevelPermission(user, args.performedBy)
     return this.couponHistoriesService.create(args)
   }
 
@@ -48,7 +48,7 @@ export class CouponHistoriesResolver {
     const couponHistory = await this.prisma.couponHistory.findUnique({
       where: { id: args.id },
     })
-    checkRowLevelPermission(user, couponHistory.id)
+    checkRowLevelPermission(user, couponHistory.performedBy)
     return this.couponHistoriesService.update(args)
   }
 
@@ -59,7 +59,7 @@ export class CouponHistoriesResolver {
     @GetUser() user: GetUserType,
   ) {
     const couponHistory = await this.prisma.couponHistory.findUnique(args)
-    checkRowLevelPermission(user, couponHistory.id)
+    checkRowLevelPermission(user, couponHistory.performedBy)
     return this.couponHistoriesService.remove(args)
   }
 }

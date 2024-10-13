@@ -111,7 +111,8 @@ export class UsersService {
         algorithm: 'HS256',
       },
     )
-    return { token: jwtToken }
+    // TODO: Change the user
+    return { token: jwtToken, user }
   }
 
   findAll(args: FindManyUserArgs) {

@@ -25,8 +25,9 @@ export class ExpiredCouponsResolver {
     @Args('createExpiredCouponInput') args: CreateExpiredCouponInput,
     @GetUser() user: GetUserType,
   ) {
+    // TODO
     // checkRowLevelPermission(user, args.id)
-    return this.expiredCouponsService.create(args)
+    // return this.expiredCouponsService.create(args)
   }
 
   @Query(() => [ExpiredCoupon], { name: 'expiredCoupons' })

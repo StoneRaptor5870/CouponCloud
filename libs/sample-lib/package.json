@@ -4,8 +4,5 @@
   "main": "dist/index.js",
   "author": "nischay",
   "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "tsc": "tsc --noEmit"
-  }
+  "scripts": {}
 }

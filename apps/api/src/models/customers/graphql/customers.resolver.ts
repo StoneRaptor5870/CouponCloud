@@ -16,6 +16,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { User } from 'src/models/users/graphql/entity/user.entity'
+import { Coupon } from 'src/models/coupons/graphql/entity/coupon.entity'
 
 @Resolver(() => Customer)
 export class CustomersResolver {
@@ -71,5 +72,12 @@ export class CustomersResolver {
   @ResolveField(() => User, { nullable: true })
   user(@Parent() customer: Customer) {
     return this.prisma.user.findUnique({ where: { id: customer.userId } })
+  }
+
+  @ResolveField(() => [Coupon])
+  bookings(@Parent() customer: Customer) {
+    return this.prisma.coupon.findMany({
+      where: { customerId: customer.id },
+    })
   }
 }

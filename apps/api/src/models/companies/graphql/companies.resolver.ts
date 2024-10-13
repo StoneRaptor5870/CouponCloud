@@ -16,6 +16,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Manager } from 'src/models/managers/graphql/entity/manager.entity'
+import { Coupon } from 'src/models/coupons/graphql/entity/coupon.entity'
 
 @Resolver(() => Company)
 export class CompaniesResolver {
@@ -24,19 +25,30 @@ export class CompaniesResolver {
     private readonly prisma: PrismaService,
   ) {}
 
-  //@AllowAuthenticated()
+  @AllowAuthenticated()
   @Mutation(() => Company)
   createCompany(
     @Args('createCompanyInput') args: CreateCompanyInput,
     @GetUser() user: GetUserType,
   ) {
-    //checkRowLevelPermission(user, args.id)
+    const managerId = args.managerId
+
+    checkRowLevelPermission(user, managerId)
     return this.companiesService.create(args)
   }
 
+  @AllowAuthenticated()
   @Query(() => [Company], { name: 'companies' })
   findAll(@Args() args: FindManyCompanyArgs) {
     return this.companiesService.findAll(args)
+  }
+
+  @AllowAuthenticated()
+  @Query(() => Company)
+  myCompany(@GetUser() user: GetUserType) {
+    return this.prisma.company.findFirst({
+      where: { managers: { some: { id: user.id } } },
+    })
   }
 
   @Query(() => Company, { name: 'company' })
@@ -52,8 +64,12 @@ export class CompaniesResolver {
   ) {
     const company = await this.prisma.company.findUnique({
       where: { id: args.id },
+      include: { managers: true },
     })
-    checkRowLevelPermission(user, company.id)
+    checkRowLevelPermission(
+      user,
+      company.managers.map((man) => man.id),
+    )
     return this.companiesService.update(args)
   }
 
@@ -63,13 +79,24 @@ export class CompaniesResolver {
     @Args() args: FindUniqueCompanyArgs,
     @GetUser() user: GetUserType,
   ) {
-    const company = await this.prisma.company.findUnique(args)
-    checkRowLevelPermission(user, company.id)
+    const company = await this.prisma.company.findUnique({
+      ...args,
+      include: { managers: true },
+    })
+    checkRowLevelPermission(
+      user,
+      company.managers.map((man) => man.id),
+    )
     return this.companiesService.remove(args)
   }
 
   @ResolveField(() => [Manager])
   managers(@Parent() company: Company) {
     return this.prisma.manager.findMany({ where: { companyId: company.id } })
+  }
+
+  @ResolveField(() => [Coupon])
+  garages(@Parent() company: Company) {
+    return this.prisma.coupon.findMany({ where: { companyId: company.id } })
   }
 }

@@ -41,13 +41,14 @@ model Manager {
 }
 
 model Customer {
-  id        String   @id @default(uuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  coupons   Coupon[] @relation("CustomerCoupons")
-  reviews   Review[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  displayName String?
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coupons     Coupon[] @relation("CustomerCoupons")
+  reviews     Review[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Credentials {
@@ -108,16 +109,16 @@ enum CouponStatus {
 }
 
 model Review {
-  id         String           @id @default(uuid())
+  id         String   @id @default(uuid())
   rating     Int
   comment    String?
-  flagged    Boolean          @default(false)
+  flagged    Boolean  @default(false)
   customerId String
-  customer   Customer         @relation(fields: [customerId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id])
   couponId   String
-  coupon     Coupon           @relation(fields: [couponId], references: [id])
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
+  coupon     Coupon   @relation(fields: [couponId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model CouponHistory {

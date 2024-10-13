@@ -16,14 +16,13 @@ export class CouponsResolver {
     private readonly prisma: PrismaService,
   ) {}
 
-  // TODO : Undo
-  // @AllowAuthenticated()
+  @AllowAuthenticated()
   @Mutation(() => Coupon)
   createCoupon(
     @Args('createCouponInput') args: CreateCouponInput,
     @GetUser() user: GetUserType,
   ) {
-    // checkRowLevelPermission(user, args.id)
+    checkRowLevelPermission(user, args.customerId)
     return this.couponsService.create(args)
   }
 
@@ -46,7 +45,7 @@ export class CouponsResolver {
     const coupon = await this.prisma.coupon.findUnique({
       where: { id: args.id },
     })
-    checkRowLevelPermission(user, coupon.id)
+    checkRowLevelPermission(user, coupon.customerId)
     return this.couponsService.update(args)
   }
 
@@ -57,7 +56,7 @@ export class CouponsResolver {
     @GetUser() user: GetUserType,
   ) {
     const coupon = await this.prisma.coupon.findUnique(args)
-    checkRowLevelPermission(user, coupon.id)
+    checkRowLevelPermission(user, coupon.customerId)
     return this.couponsService.remove(args)
   }
 }
