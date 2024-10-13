@@ -55,7 +55,7 @@ type Customer {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User
-  bookings: [Coupon!]!
+  coupons: [Coupon!]!
 }
 
 type Coupon {

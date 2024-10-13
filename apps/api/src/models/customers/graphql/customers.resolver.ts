@@ -75,7 +75,7 @@ export class CustomersResolver {
   }
 
   @ResolveField(() => [Coupon])
-  bookings(@Parent() customer: Customer) {
+  coupons(@Parent() customer: Customer) {
     return this.prisma.coupon.findMany({
       where: { customerId: customer.id },
     })

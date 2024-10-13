@@ -7,9 +7,29 @@ import { UpdateReviewInput } from './dtos/update-review.input'
 @Injectable()
 export class ReviewsService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createReviewInput: CreateReviewInput) {
+  async create({
+    comment,
+    couponId,
+    customerId,
+    flagged,
+    rating,
+  }: CreateReviewInput) {
+    const customer = await this.prisma.customer.findUnique({
+      where: { userId: customerId },
+    })
+
+    if (!customer) {
+      throw new Error(`Customer with ID ${customerId} not found.`)
+    }
+
     return this.prisma.review.create({
-      data: createReviewInput,
+      data: {
+        comment,
+        flagged,
+        rating,
+        couponId,
+        customerId,
+      },
     })
   }
 
