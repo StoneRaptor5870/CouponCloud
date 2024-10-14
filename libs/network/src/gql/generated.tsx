@@ -69,6 +69,12 @@ export type AdminWhereUniqueInput = {
   id: Scalars['String']['input']
 }
 
+export type AuthProvider = {
+  __typename?: 'AuthProvider'
+  id: Scalars['String']['output']
+  type: AuthProviderType
+}
+
 export enum AuthProviderType {
   Credentials = 'CREDENTIALS',
   Google = 'GOOGLE',
@@ -714,6 +720,7 @@ export type Query = {
   customers: Array<Customer>
   expiredCoupon: ExpiredCoupon
   expiredCoupons: Array<ExpiredCoupon>
+  getAuthProvider?: Maybe<AuthProvider>
   manager: Manager
   managers: Array<Manager>
   myCompany: Company
@@ -800,6 +807,10 @@ export type QueryExpiredCouponsArgs = {
   skip?: InputMaybe<Scalars['Float']['input']>
   take?: InputMaybe<Scalars['Float']['input']>
   where?: InputMaybe<ExpiredCouponWhereInput>
+}
+
+export type QueryGetAuthProviderArgs = {
+  id: Scalars['String']['input']
 }
 
 export type QueryManagerArgs = {
@@ -1020,9 +1031,12 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User'
+  admin?: Maybe<Admin>
   createdAt: Scalars['DateTime']['output']
+  customer?: Maybe<Customer>
   id: Scalars['String']['output']
   image?: Maybe<Scalars['String']['output']>
+  manager?: Maybe<Manager>
   name?: Maybe<Scalars['String']['output']>
   updatedAt: Scalars['DateTime']['output']
 }
@@ -1117,7 +1131,49 @@ export type LoginMutation = {
   }
 }
 
+export type GetAuthProviderQueryVariables = Exact<{
+  getAuthProviderId: Scalars['String']['input']
+}>
+
+export type GetAuthProviderQuery = {
+  __typename?: 'Query'
+  getAuthProvider?: {
+    __typename?: 'AuthProvider'
+    id: string
+    type: AuthProviderType
+  } | null
+}
+
+export type CompaniesQueryVariables = Exact<{
+  distinct?: InputMaybe<Array<CompanyScalarFieldEnum> | CompanyScalarFieldEnum>
+  orderBy?: InputMaybe<
+    Array<CompanyOrderByWithRelationInput> | CompanyOrderByWithRelationInput
+  >
+  where?: InputMaybe<CompanyWhereInput>
+  cursor?: InputMaybe<CompanyWhereUniqueInput>
+  skip?: InputMaybe<Scalars['Float']['input']>
+  take?: InputMaybe<Scalars['Float']['input']>
+}>
+
+export type CompaniesQuery = {
+  __typename?: 'Query'
+  companies: Array<{
+    __typename?: 'Company'
+    createdAt: any
+    description?: string | null
+    displayName?: string | null
+    id: string
+    updatedAt: any
+    coupons: Array<{ __typename?: 'Coupon'; id: string }>
+    managers: Array<{ __typename?: 'Manager'; id: string; userId: string }>
+  }>
+}
+
 export const namedOperations = {
+  Query: {
+    GetAuthProvider: 'GetAuthProvider',
+    Companies: 'Companies',
+  },
   Mutation: {
     createUserWithCredentials: 'createUserWithCredentials',
     registerWithProvider: 'registerWithProvider',
@@ -1307,3 +1363,232 @@ export const LoginDocument = {
     },
   ],
 } as unknown as DocumentNode<LoginMutation, LoginMutationVariables>
+export const GetAuthProviderDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAuthProvider' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'getAuthProviderId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getAuthProvider' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'getAuthProviderId' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetAuthProviderQuery,
+  GetAuthProviderQueryVariables
+>
+export const CompaniesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Companies' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'distinct' },
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'CompanyScalarFieldEnum' },
+              },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' },
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'CompanyOrderByWithRelationInput',
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'CompanyWhereInput' },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'cursor' },
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'CompanyWhereUniqueInput' },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'companies' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'distinct' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'distinct' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'cursor' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'cursor' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'coupons' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'managers' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'userId' },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CompaniesQuery, CompaniesQueryVariables>

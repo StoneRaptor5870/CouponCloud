@@ -29,3 +29,40 @@ mutation login($loginInput: LoginInput!) {
   }
 }
 
+query GetAuthProvider($getAuthProviderId: String!) {
+  getAuthProvider(id: $getAuthProviderId) {
+    id
+    type
+  }
+}
+
+query Companies(
+  $distinct: [CompanyScalarFieldEnum!]
+  $orderBy: [CompanyOrderByWithRelationInput!]
+  $where: CompanyWhereInput
+  $cursor: CompanyWhereUniqueInput
+  $skip: Float
+  $take: Float
+) {
+  companies(
+    distinct: $distinct
+    orderBy: $orderBy
+    where: $where
+    cursor: $cursor
+    skip: $skip
+    take: $take
+  ) {
+    createdAt
+    description
+    displayName
+    coupons {
+      id
+    }
+    id
+    managers {
+      id
+      userId
+    }
+    updatedAt
+  }
+}
