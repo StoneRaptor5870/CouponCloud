@@ -1,8 +1,0 @@
-{
-  "name": "@couponcloud/sample-lib",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "author": "nischay",
-  "license": "MIT",
-  "scripts": {}
-}

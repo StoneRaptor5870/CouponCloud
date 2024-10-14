@@ -1,5 +1,5 @@
 'use client'
-import { add } from '@couponcloud/sample-lib'
+
 import { useQuery } from '@apollo/client'
 import { CompaniesDocument } from '@couponcloud/network/src/gql/generated'
 
@@ -9,7 +9,7 @@ export default function Home() {
   if (loading) return <div>Loading...</div>
   return (
     <div>
-      CouponCloud Home {add(10, 5)}
+      CouponCloud Home
       <div>
         {data?.companies && data.companies.length > 0 ? (
           data.companies.map((company) => (
