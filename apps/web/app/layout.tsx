@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApolloProvider } from '@couponcloud/network/src/config/apollo'
-import './globals.css'
+import '@couponcloud/ui/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

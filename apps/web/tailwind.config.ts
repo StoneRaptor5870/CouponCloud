@@ -1,19 +1,12 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  presets: [require('../../libs/ui/tailwind.config')],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{ts,tsx}',
+    '../../libs/ui/**/*.{ts,tsx}',
+    '!../../**/node_modules/**',
+    '!../../node_modules/**',
   ],
-  theme: {
-    extend: {
-      colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-      },
-    },
-  },
-  plugins: [],
 }
 export default config

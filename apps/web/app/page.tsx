@@ -8,12 +8,12 @@ export default function Home() {
   console.log(data)
   if (loading) return <div>Loading...</div>
   return (
-    <div>
+    <main>
       CouponCloud Home
       <div>
         {data?.companies && data.companies.length > 0 ? (
           data.companies.map((company) => (
-            <div className="p-4 bg-yellow-500 rounded" key={company.id}>
+            <div className="p-4 bg-primary rounded" key={company.id}>
               <div>{company.displayName}</div>
               <div>{company.description}</div>
             </div>
@@ -22,6 +22,6 @@ export default function Home() {
           <div>No companies</div>
         )}
       </div>
-    </div>
+    </main>
   )
 }

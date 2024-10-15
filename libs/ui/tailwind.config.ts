@@ -1,17 +1,28 @@
 import type { Config } from 'tailwindcss'
-
+import {
+  colorsConfig,
+  spacingConfig,
+  animationConfig,
+  keyframesConfig,
+} from './styles/config'
 const config: Config = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  important: true,
+  content: ['./components/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    colors: colorsConfig,
     extend: {
-      colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+      ringColor: {
+        DEFAULT: colorsConfig.primary.DEFAULT,
       },
+      outlineColor: {
+        DEFAULT: colorsConfig.primary.DEFAULT,
+      },
+      borderRadius: {
+        DEFAULT: '0',
+      },
+      spacing: spacingConfig,
+      animation: animationConfig,
+      keyframes: keyframesConfig,
     },
   },
   plugins: [],
