@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApolloProvider } from '@couponcloud/network/src/config/apollo'
+import { SessionProvider } from '@couponcloud/ui/components/molecules/SessionProvider'
 import '@couponcloud/ui/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,11 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ApolloProvider>
-        <body className={`${inter.className} antialiased bg-gray-25`}>
-          {children}
-        </body>
-      </ApolloProvider>
+      <SessionProvider>
+        <ApolloProvider>
+          <body className={`${inter.className} antialiased bg-gray-25`}>
+            {children}
+          </body>
+        </ApolloProvider>
+      </SessionProvider>
     </html>
   )
 }

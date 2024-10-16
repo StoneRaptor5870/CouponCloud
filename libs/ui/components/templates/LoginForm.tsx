@@ -65,7 +65,7 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
         Submit
       </Button>
       <div className="mt-4 text-sm">
-        Do not have an autospace account?
+        Do not have an CouponCloud account?
         <br />
         <Link
           href="/register"

@@ -2,13 +2,27 @@
 
 import { useQuery } from '@apollo/client'
 import { CompaniesDocument } from '@couponcloud/network/src/gql/generated'
+import { useSession, signOut } from 'next-auth/react'
+import Link from 'next/link'
+import { Button } from '@couponcloud/ui/components/atoms/Button'
 
 export default function Home() {
   const { data, loading } = useQuery(CompaniesDocument)
-  console.log(data)
+  const { data: sessionData, status } = useSession()
+
   if (loading) return <div>Loading...</div>
+
+  console.log(sessionData)
+
   return (
     <main>
+      <div>
+        {sessionData?.user?.id ? (
+          <Button onClick={() => signOut()}>Signout</Button>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
+      </div>
       CouponCloud Home
       <div>
         {data?.companies && data.companies.length > 0 ? (
