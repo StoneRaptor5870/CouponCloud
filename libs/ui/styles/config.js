@@ -67,7 +67,7 @@ export const animationConfig = {
   'wiggle-fade': 'wiggle-fade 1s ease-in-out infinite',
   slide: 'slide 1s ease-in-out infinite',
   'slide-left': 'slide-left 1s ease-in-out infinite',
-  'park-car': 'park-car 5s ease-in-out infinite',
+  coupon: 'coupon 5s ease-in-out infinite',
   'slide-right': 'slide-right 1s linear infinite',
   blink: 'blink 2s linear infinite',
   breathe: 'breathe 6s ease-in-out infinite',
@@ -112,7 +112,7 @@ export const keyframesConfig = {
       opacity: '0',
     },
   },
-  'park-car': {
+  coupon: {
     '0%': {
       transform: ' translateX(-150%) translateY(150%) rotate(90deg)',
     },
