@@ -82,6 +82,7 @@ type Coupon {
   discount: Float!
   expiryDate: DateTime!
   companyId: String!
+  company: Company
 }
 
 enum CouponStatus {

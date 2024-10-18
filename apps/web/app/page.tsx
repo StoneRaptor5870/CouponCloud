@@ -40,6 +40,8 @@ export default function Home() {
               <div>{coupon.discount}</div>
               <div>{coupon.expiryDate}</div>
               <div>{coupon.status}</div>
+              <div>{coupon.company?.displayName}</div>
+              <div>{coupon.company?.description}</div>
             </div>
           ))
         ) : (

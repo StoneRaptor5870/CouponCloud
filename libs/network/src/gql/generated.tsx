@@ -139,6 +139,7 @@ export type CompanyWhereUniqueInput = {
 export type Coupon = {
   __typename?: 'Coupon'
   code: Scalars['String']['output']
+  company?: Maybe<Company>
   companyId: Scalars['String']['output']
   createdAt: Scalars['DateTime']['output']
   customerId?: Maybe<Scalars['String']['output']>
@@ -726,7 +727,6 @@ export type Query = {
   myCompany: Company
   review: Review
   reviews: Array<Review>
-  searchCoupons: Array<Coupon>
   user: User
   users: Array<User>
   whoami: User
@@ -1185,16 +1185,21 @@ export type CouponsQuery = {
   __typename?: 'Query'
   coupons: Array<{
     __typename?: 'Coupon'
+    id: string
     code: string
-    companyId: string
-    createdAt: any
-    customerId?: string | null
     description?: string | null
     discount: number
     expiryDate: any
-    id: string
     status: CouponStatus
+    companyId: string
+    createdAt: any
     updatedAt: any
+    company?: {
+      __typename?: 'Company'
+      displayName?: string | null
+      description?: string | null
+      id: string
+    } | null
   }>
 }
 
@@ -1756,15 +1761,32 @@ export const CouponsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'companyId' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'customerId' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'discount' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'expiryDate' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'companyId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'company' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'displayName' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'description' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
               ],
             },

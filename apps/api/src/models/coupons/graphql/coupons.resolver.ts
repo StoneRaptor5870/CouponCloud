@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { CouponsService } from './coupons.service'
 import { Coupon } from './entity/coupon.entity'
 import { FindManyCouponArgs, FindUniqueCouponArgs } from './dtos/find.args'
@@ -8,6 +15,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Company } from 'src/models/companies/graphql/entity/company.entity'
 
 @Resolver(() => Coupon)
 export class CouponsResolver {
@@ -60,5 +68,10 @@ export class CouponsResolver {
     const coupon = await this.prisma.coupon.findUnique(args)
     checkRowLevelPermission(user, coupon.customerId)
     return this.couponsService.remove(args)
+  }
+
+  @ResolveField(() => Company, { nullable: true })
+  company(@Parent() coupon: Coupon) {
+    return this.prisma.company.findUnique({ where: { id: coupon.companyId } })
   }
 }

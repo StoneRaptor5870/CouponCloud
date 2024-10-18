@@ -67,17 +67,35 @@ query Companies(
   }
 }
 
-query Coupons($distinct: [CouponScalarFieldEnum!], $where: CouponWhereInput, $orderBy: [CouponOrderByWithRelationInput!], $cursor: CouponWhereUniqueInput, $take: Float, $skip: Float) {
-  coupons(distinct: $distinct, where: $where, orderBy: $orderBy, cursor: $cursor, take: $take, skip: $skip) {
+query Coupons(
+  $distinct: [CouponScalarFieldEnum!]
+  $where: CouponWhereInput
+  $orderBy: [CouponOrderByWithRelationInput!]
+  $cursor: CouponWhereUniqueInput
+  $take: Float
+  $skip: Float
+) {
+  coupons(
+    distinct: $distinct
+    where: $where
+    orderBy: $orderBy
+    cursor: $cursor
+    take: $take
+    skip: $skip
+  ) {
+    id
     code
-    companyId
-    createdAt
-    customerId
     description
     discount
     expiryDate
-    id
     status
+    companyId
+    company {
+      displayName
+      description
+      id
+    }
+    createdAt
     updatedAt
   }
 }
