@@ -19,6 +19,7 @@
   "devDependencies": {
     "@couponcloud/network": "*",
     "@couponcloud/ui": "*",
+    "@couponcloud/3d": "*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
