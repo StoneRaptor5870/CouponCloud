@@ -1203,11 +1203,60 @@ export type CouponsQuery = {
   }>
 }
 
+export type CouponQueryVariables = Exact<{
+  where: CouponWhereUniqueInput
+}>
+
+export type CouponQuery = {
+  __typename?: 'Query'
+  coupon: {
+    __typename?: 'Coupon'
+    code: string
+    companyId: string
+    description?: string | null
+    discount: number
+    expiryDate: any
+    id: string
+    status: CouponStatus
+    company?: {
+      __typename?: 'Company'
+      description?: string | null
+      displayName?: string | null
+    } | null
+  }
+}
+
+export type CompanyQueryVariables = Exact<{
+  where: CompanyWhereUniqueInput
+}>
+
+export type CompanyQuery = {
+  __typename?: 'Query'
+  company: {
+    __typename?: 'Company'
+    description?: string | null
+    displayName?: string | null
+    id: string
+    coupons: Array<{
+      __typename?: 'Coupon'
+      code: string
+      description?: string | null
+      discount: number
+      expiryDate: any
+      id: string
+      status: CouponStatus
+    }>
+    managers: Array<{ __typename?: 'Manager'; displayName?: string | null }>
+  }
+}
+
 export const namedOperations = {
   Query: {
     GetAuthProvider: 'GetAuthProvider',
     Companies: 'Companies',
     Coupons: 'Coupons',
+    Coupon: 'Coupon',
+    Company: 'Company',
   },
   Mutation: {
     createUserWithCredentials: 'createUserWithCredentials',
@@ -1796,3 +1845,170 @@ export const CouponsDocument = {
     },
   ],
 } as unknown as DocumentNode<CouponsQuery, CouponsQueryVariables>
+export const CouponDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Coupon' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CouponWhereUniqueInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'coupon' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'company' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'description' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'displayName' },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'companyId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'discount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'expiryDate' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CouponQuery, CouponQueryVariables>
+export const CompanyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Company' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CompanyWhereUniqueInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'company' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'coupons' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'description' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'discount' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'expiryDate' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'status' },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'managers' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'displayName' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CompanyQuery, CompanyQueryVariables>

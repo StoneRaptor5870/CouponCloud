@@ -99,3 +99,38 @@ query Coupons(
     updatedAt
   }
 }
+
+query Coupon($where: CouponWhereUniqueInput!) {
+  coupon(where: $where) {
+    code
+    company {
+      description
+      displayName
+    }
+    companyId
+    description
+    discount
+    expiryDate
+    id
+    status
+  }
+}
+
+query Company($where: CompanyWhereUniqueInput!) {
+  company(where: $where) {
+    coupons {
+      code
+      description
+      discount
+      expiryDate
+      id
+      status
+    }
+    description
+    displayName
+    id
+    managers {
+      displayName
+    }
+  }
+}
