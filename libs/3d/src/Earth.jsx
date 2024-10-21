@@ -9,7 +9,7 @@ const Earth = () => {
 
   
   return (
-    <primitive object={earth.scene} scale={1.3} position-y={-1} rotation-y={0} />
+    <primitive object={earth.scene} scale={2.5} position-y={-0.1} rotation-y={0} />
   )
 }
 
@@ -22,7 +22,7 @@ const EarthCanvas = () => {
       gl={{ preserveDrawingBuffer: true }}
       camera={{
         fov: 45,
-        near: 0.1,
+        near: 0.5,
         far: 200,
         position: [-1, 3, 6],
       }}

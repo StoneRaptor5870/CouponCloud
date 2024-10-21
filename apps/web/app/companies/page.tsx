@@ -20,7 +20,7 @@ export default function Companies() {
         data.companies.map((company) => (
           <div
             key={company.id}
-            className="p-4 bg-primary rounded cursor-pointer hover:bg-primary-dark"
+            className="p-4 rounded cursor-pointer"
             onClick={() => handleRedirect(company.id)}
           >
             <div>{company.displayName}</div>

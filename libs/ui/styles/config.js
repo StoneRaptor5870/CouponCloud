@@ -29,7 +29,7 @@ const grayPallete = {
   800: `hsl(${brandHue}, 2%, 08%)`,
   900: `hsl(${brandHue}, 2%, 04%)`,
 }
-const primaryPallete = {
+const terPallete = {
   DEFAULT: 'hsl(116, 100%, 57%)',
   25: 'hsl(116, 100%, 98%)',
   50: 'hsl(116, 100%, 90%)',
@@ -185,7 +185,7 @@ export const colorsConfig = {
   transparent: colors.transparent,
   black: colors.black,
   white: colors.white,
-  primary: primaryPallete,
+  tertiary: terPallete,
   red: redPallete,
   yellow: yellowPallete,
   gray: grayPallete,

@@ -26,13 +26,13 @@ export default function CouponPage({ params }: CouponPageProps) {
   return (
     <div className="p-6">
       <button
-        className="mb-4 p-2 bg-secondary text-black rounded"
+        className="mb-4 p-2 text-black rounded"
         onClick={() => router.back()}
       >
         Go Back
       </button>
       {coupon ? (
-        <div className="p-4 bg-primary rounded">
+        <div className="p-4 rounded">
           <h1 className="text-xl font-bold">{coupon.description}</h1>
           <p>Discount: {coupon.discount}</p>
           <p>Expiry Date: {coupon.expiryDate}</p>

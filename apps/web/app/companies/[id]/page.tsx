@@ -26,13 +26,13 @@ export default function CompanyPage({ params }: CompanyPageProps) {
   return (
     <div className="p-6">
       <button
-        className="mb-4 p-2 bg-secondary text-black rounded"
+        className="mb-4 p-2 text-black rounded"
         onClick={() => router.back()}
       >
         Go Back
       </button>
       {company ? (
-        <div className="p-4 bg-primary rounded">
+        <div className="p-4 rounded">
           <h1 className="text-xl font-bold">{company.displayName}</h1>
           <p>{company.description}</p>
         </div>

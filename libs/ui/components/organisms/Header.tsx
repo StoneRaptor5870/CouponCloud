@@ -24,7 +24,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
         <Container className="relative   flex items-center justify-between h-16 py-2 gap-16">
           <Link href="/" aria-label="Home" className="w-auto z-50">
             <Brand type={type} className="hidden h-10 sm:block" />
-            <Brand type={type} shortForm className="block sm:hidden" />
+            <Brand type={type} shortForm className="block sm:hidden pl-2" />
           </Link>
           <div className="flex items-center gap-2">
             {uid ? (
@@ -56,7 +56,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
                     Register
                   </Button>
                 </Link>
-                <Link href="/login">
+                <Link href="/login" className="pr-2">
                   <Button>Log in</Button>
                 </Link>
               </>
