@@ -3,6 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { useQuery } from '@apollo/client'
 import { CouponDocument } from '@couponcloud/network/src/gql/generated'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@couponcloud/ui/components/ui/card'
 
 interface CouponPageProps {
   params: {
@@ -18,8 +25,18 @@ export default function CouponPage({ params }: CouponPageProps) {
     variables: { where: { id } },
   })
 
-  if (loading) return <div>Loading coupon details...</div>
-  if (error) return <div>Error fetching coupon details</div>
+  if (loading)
+    return (
+      <div className="flex justify-center items-center mt-12">
+        Loading coupon details...
+      </div>
+    )
+  if (error)
+    return (
+      <div className="flex justify-center items-center mt-12">
+        Error fetching coupon details
+      </div>
+    )
 
   const coupon = data?.coupon
 
@@ -32,19 +49,28 @@ export default function CouponPage({ params }: CouponPageProps) {
         Go Back
       </button>
       {coupon ? (
-        <div className="p-4 rounded">
-          <h1 className="text-xl font-bold">{coupon.description}</h1>
-          <p>Discount: {coupon.discount}</p>
-          <p>Expiry Date: {coupon.expiryDate}</p>
-          <p>Status: {coupon.status}</p>
-          <div>
-            <h2 className="text-lg font-semibold">Company</h2>
-            <p>Name: {coupon.company?.displayName}</p>
-            <p>Description: {coupon.company?.description}</p>
+        <Card className="p-4 rounded hover:shadow-lg flex justify-center items-center h-96">
+          <div className="text-center">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold">
+                {coupon.code}
+              </CardTitle>
+              <CardDescription className="mt-2">
+                {coupon.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="mt-4">
+              <p>{coupon.company?.displayName}</p>
+              <p>{coupon.company?.description}</p>
+              <p>{coupon.discount}</p>
+              <p>{coupon.status}</p>
+            </CardContent>
           </div>
-        </div>
+        </Card>
       ) : (
-        <div>Coupon not found</div>
+        <div className="flex justify-center items-center mt-12">
+          Coupon not found
+        </div>
       )}
     </div>
   )

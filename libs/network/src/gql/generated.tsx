@@ -1165,7 +1165,15 @@ export type CompaniesQuery = {
     displayName?: string | null
     id: string
     updatedAt: any
-    coupons: Array<{ __typename?: 'Coupon'; id: string }>
+    coupons: Array<{
+      __typename?: 'Coupon'
+      code: string
+      description?: string | null
+      discount: number
+      expiryDate: any
+      id: string
+      status: CouponStatus
+    }>
     managers: Array<{ __typename?: 'Manager'; id: string; userId: string }>
   }>
 }
@@ -1648,7 +1656,24 @@ export const CompaniesDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'description' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'discount' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'expiryDate' },
+                      },
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'status' },
+                      },
                     ],
                   },
                 },

@@ -56,7 +56,12 @@ query Companies(
     description
     displayName
     coupons {
+      code
+      description
+      discount
+      expiryDate
       id
+      status
     }
     id
     managers {
