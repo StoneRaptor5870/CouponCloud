@@ -20,9 +20,13 @@
 
 1. 🤖 [Introduction](#introduction)
 2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
 
 ## <a name="introduction">🤖 Introduction</a>
+CouponCloud is an innovative platform designed to simplify and streamline coupon management for businesses and customers alike. Whether you're a retailer looking to offer exclusive deals or a customer seeking discounts, CouponCloud delivers a seamless and user-friendly experience.
+
+Built with a powerful tech stack leveraging modern web technologies, CouponCloud ensures robust performance, scalability, and ease of use. It combines the efficiency of Nest.js for backend services, the flexibility of Next.js for frontend development, and the power of GraphQL to efficiently manage data flow between clients and servers. Prisma and PostgreSQL ensure reliable data management, while Tailwind CSS brings responsive and attractive design to the application. All of this is orchestrated within a monorepo architecture, making development and deployment more efficient.
+
+With Docker ensuring smooth deployment and Swagger providing API documentation, CouponCloud is designed to scale and meet modern demands.
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
@@ -36,5 +40,3 @@
 - Docker
 - Swagger
 - Tailwind CSS
-
-## <a name="features">🔋 Features</a>
