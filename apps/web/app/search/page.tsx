@@ -10,6 +10,7 @@ import {
 } from '@couponcloud/network/src/gql/generated'
 import { useDebounce } from '@couponcloud/util/hooks/useDebounce'
 import { Input } from '@couponcloud/ui/components/ui/input'
+import { Card } from '@couponcloud/ui/components/ui/card'
 
 export default function Search() {
   const [search, setSearch] = useState<{
@@ -117,6 +118,7 @@ export default function Search() {
 
         <select
           name="orderBy"
+          value={`${Object.keys(search.orderBy[0])[0]}|${Object.values(search.orderBy[0])[0]}`}
           onChange={handleSortChange}
           className="border p-2 w-full bg-white"
         >
@@ -147,7 +149,10 @@ export default function Search() {
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {data?.coupons?.length ? (
           data.coupons.map((coupon) => (
-            <div key={coupon.id} className="border p-4 my-2">
+            <Card
+              key={coupon.id}
+              className="border p-4 my-2 rounded hover:shadow-lg"
+            >
               <h3 className="text-lg font-bold">{coupon.code}</h3>
               <p>Description: {coupon.description}</p>
               <p>Discount: {coupon.discount}%</p>
@@ -156,7 +161,7 @@ export default function Search() {
               </p>
               <p>Status: {coupon.status}</p>
               <p>Company: {coupon.company?.displayName}</p>
-            </div>
+            </Card>
           ))
         ) : (
           <p className="flex justify-center items-center mt-12">

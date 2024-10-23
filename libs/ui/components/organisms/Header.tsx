@@ -26,7 +26,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
             <Brand type={type} className="hidden h-10 sm:block" />
             <Brand type={type} shortForm className="block sm:hidden pl-2" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pr-2">
             {uid ? (
               <Sidebar>
                 <div className="flex flex-col justify-between h-full">
