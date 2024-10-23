@@ -11,12 +11,6 @@ import {
 import { useDebounce } from '@couponcloud/util/hooks/useDebounce'
 import { Input } from '@couponcloud/ui/components/ui/input'
 
-interface WhereFilter {
-  code?: { contains: string }
-  discount?: { gte: number }
-  expiryDate?: { lte: string }
-}
-
 export default function Search() {
   const [search, setSearch] = useState<{
     code: string
@@ -90,7 +84,7 @@ export default function Search() {
 
   return (
     <div className="space-y-4 p-6">
-      <div className="space-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           type="text"
           name="code"
@@ -124,7 +118,7 @@ export default function Search() {
         <select
           name="orderBy"
           onChange={handleSortChange}
-          className="border p-2 w-full"
+          className="border p-2 w-full bg-white"
         >
           <option value={`discount|${SortOrder.Asc}`}>
             Sort by Discount (Asc)
@@ -150,23 +144,20 @@ export default function Search() {
         Clear Filters
       </button>
 
-      <div className="mt-4">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {data?.coupons?.length ? (
-          <ul>
-            {data.coupons.map((coupon) => (
-              <li key={coupon.id} className="border p-4 my-2">
-                <h3 className="text-lg font-bold">{coupon.code}</h3>
-                <p>Description: {coupon.description}</p>
-                <p>Discount: {coupon.discount}%</p>
-                <p>
-                  Expiry Date:{' '}
-                  {new Date(coupon.expiryDate).toLocaleDateString()}
-                </p>
-                <p>Status: {coupon.status}</p>
-                <p>Company: {coupon.company?.displayName}</p>
-              </li>
-            ))}
-          </ul>
+          data.coupons.map((coupon) => (
+            <div key={coupon.id} className="border p-4 my-2">
+              <h3 className="text-lg font-bold">{coupon.code}</h3>
+              <p>Description: {coupon.description}</p>
+              <p>Discount: {coupon.discount}%</p>
+              <p>
+                Expiry Date: {new Date(coupon.expiryDate).toLocaleDateString()}
+              </p>
+              <p>Status: {coupon.status}</p>
+              <p>Company: {coupon.company?.displayName}</p>
+            </div>
+          ))
         ) : (
           <p className="flex justify-center items-center mt-12">
             No coupons found

@@ -13,10 +13,10 @@ const config: Config = {
     colors: colorsConfig,
     extend: {
       ringColor: {
-        DEFAULT: 'colorsConfig.primary.DEFAULT',
+        DEFAULT: 'hsl(116, 100%, 27%)',
       },
       outlineColor: {
-        DEFAULT: 'colorsConfig.primary.DEFAULT',
+        DEFAULT: 'hsl(116, 100%, 27%)',
       },
       borderRadius: {
         DEFAULT: '0',
